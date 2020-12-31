@@ -1,0 +1,69 @@
+Hi Anil,
+ 
+
+We need to consolidate few menu items in the admin as below
+ 
+
+Dashboard
+“Customer Management” will become “Manage Customers”
+Area
+“All user” becomes “Roles”
+Customers
+Manage Products (New menu)
+“Manage Tags” becomes “Tags/Filters”
+“Manage Brand” becomes “Brands”
+Products Master” becomes “Products”
+“Stock Management” will become ”Manage Stock”
+“Manage Source” will become “Distributer”
+“Manage Products” will become “Purchases”
+“View Stock” will become “Inventory”
+“Order Management” will become “Orders”
+“Payment Type” will become “Payment Options”
+“Orders” will become “Customer Orders”
+Refund Management will become “Refunds”
+“Communications” (New Menu)
+SMS
+Promotions
+Online PDF
+“Reports” (New Menu)
+Revenue Management will become “Sales”
+ 
+
+We need to ensure the page names (routes) also are updated including their titles inside the page, please test on your local machine before uploading.  
+ 
+
+In the frontend,
+if product is not available in stock, we should say “Out of Stock” instead of “Not Available”
+change “Remove from cart” to just “Remove”
+Also noted that you have given fixed height to all the product sections, instead of fixed heights you can use this example (h-100 class) https://www.codeply.com/go/d8lGpPzUOy
+ 
+
+ Hi Anil,
+ 
+
+Please find list of updates as below:
+ 
+
+PFA favicons for the website.  Add the attached code in the head section of entire website.
+New Module – Bulk SMS >
+Admin Backend
+                                                    i.     New Page as “SMS Logs”, in this page show a listview of all sms logs send through the system including otp and invoice.
+                                                   ii.     On this page you will add a button as “Bulk SMS”, Once clicked it will open a form where we can type a message of approx. 140 characters. When we click send it should confirm with Yes/No before sending.
+Also add a reverse character count in the text area so we can know how long our message is.
+Also there will be select dropdown where we can select between all users and test. All users will send sms to all registered numbers while test will send message to only test numbers like mine and yours.
+  New Module -  Promotional Banners
+Backend
+                                                    i.     New Page in admin as “Promotions”, in this page we will allow the admin to upload multiple banners, enable/disable them. These banners will be visible in the frontend.
+                                                   ii.     New table for promotions will be created, fields will be: id[pk], brand_id[fk], promo_name, banner_url, link[optional] status[enable/disable], start_date, end_date.
+                                                  iii.     The “Add Banner” form will have following fields: select brand, promo name, upload banner, link[optional], select status, select start_date and end_date.
+                                                  iv.     There can be more than 1 banners per brand.
+                                                   v.     Banner kb size should not exceed 1 mb
+Frontend
+                                                    i.     Visible on following pages, i.e. home, category/tag, brand  
+                                                   ii.     Will be responsive with fixed height of 150px and width: auto;
+                                                  iii.     Will run in carousel, I.e. multiple banners will rotate one after another.
+                                                  iv.     If no banners are active section is hidden
+                                                   v.     Once user clicks on the banner the user is taken to the brand page of that banner.
+ 
+ 
+ 

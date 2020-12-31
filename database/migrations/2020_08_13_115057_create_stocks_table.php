@@ -1,0 +1,43 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateStocksTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+         if (!Schema::hasTable('password_resets')) {
+        Schema::create('stocks', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('product_id')->nullable()->unsigned()->index();
+            $table->integer('purchase_quantity');
+            $table->integer('available_quantity');
+            $table->timestamps();
+
+            $table->foreign('product_id')
+            ->references('id')->on('products')
+            ->onDelete('cascade');
+            
+        });
+    }
+
+
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('stocks');
+    }
+}
