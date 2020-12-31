@@ -46,7 +46,7 @@ Route::get('/migrate', function() {
     // return what you want
 });
 
-Route::get('login-cms', 'Auth\LoginController@showLoginForm');
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 
 Route::post('login', [
   'as' => '',
@@ -106,9 +106,9 @@ Route::get('/contact-us', function () {
     return view('contact',compact('brand_list'));
 });
 
-Route::get('/login', function () {
-    return redirect('/');
-})->name('login');
+// Route::get('/login', function () {
+//     return redirect('/');
+// })->name('login');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
