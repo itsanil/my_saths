@@ -6,10 +6,10 @@
     <a href="{{ url('/login-cms') }}">
       <!-- <img src="{{ asset('public/images/logo.png') }}" alt="AdminLTE Logo" class="brand-image"
            style="width:100%;"> -->
-           <center>
+          <!--  <center>
              <img src="{{ asset('public/images/darksg.jpg') }}" alt="sgLogo" class=""
            style="width:175px;height: 175px;">
-           </center>
+           </center> -->
         </a>
   </div>
   <!-- /.login-logo -->
@@ -21,7 +21,7 @@
                         @csrf
         <div class="input-group mb-3">
           <!-- <input type="email" class="form-control" placeholder="Email"> -->
-            <input id="email" type="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+            <input id="email" type="text" placeholder="Username" class="form-control @error('email') is-invalid @enderror" name="username" value="{{ old('email') }}" required autocomplete="email" autofocus>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
