@@ -94,6 +94,7 @@
 
   // $(document).on('submit', '#submitUserForm', function() {
     $('#submitUserForm').on( "submit", function(){
+      alert('sdsd');
     var formData = $('#submitUserForm').serialize();
     var status = true;
     if($('#EMail').val() != $('#ConfirmEMail').val() || $('#EMail').val() != $('#ConfirmEMail').val() || $('#EMail').val() != $('#ConfirmEMail').val()){
@@ -192,7 +193,7 @@
     $('.select2').select2();
   });
 </script>
-    
+    State_name
 @endsection
 @section('content')
 <div id="india_state">
@@ -379,7 +380,7 @@
                                            <div class="row">
                                                <div class="form-group col-md-12">
                                                    <label for="State">State<span style="color:red"></span></label>
-                                                   <input class="form-control" id="State" name="State_name" placeholder="State" required="" type="text" value="">
+                                                   <input class="form-control" id="State" name="State_name" placeholder="State"  type="text" value="">
                                                </div>
                                            </div>
                                        </div>
@@ -655,7 +656,7 @@
                                     <div class="row" id="Div_Pan">
                                         <div class="form-group col-md-12">
                                             <label for="PanNo">PAN/AADHAR NUMBER<span style="color:red"></span></label>
-                                            <input class="form-control" id="PanNo" maxlength="50" name="PanNo" placeholder="PAN/AADHAR NUMBER" type="text" required="" value="">
+                                            <input class="form-control" id="PanNo" maxlength="50" name="PanNo" placeholder="PAN/AADHAR NUMBER" type="text"  value="">
                                             <span class="field-validation-valid" data-valmsg-for="PanNo" data-valmsg-replace="true"></span>
                                         </div>
                                     </div>
