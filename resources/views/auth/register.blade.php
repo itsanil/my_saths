@@ -215,7 +215,8 @@
                     <div class="col-md-12">
                         <p class="text-center">We'll never post anything without your permission. And you can choose to stay anonymous!</p>
                     </div>
-                <form id="submitUserForm" enctype="multipart/form-data" role="form" >                            <div class="row">
+                <form id="submitUserForm" method="POST">  
+                                          <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="form_username_email">USER TYPE<span style="color:red">*</span></label>
@@ -308,7 +309,7 @@
 
                                     <div class="form-group col-md-12">
                                         <label for="form_username_email">Password<span style="color:red">*</span></label>
-                                        <input class="form-control" data-val="true" data-val-required="Password is required" id="mpwd" maxlength="25" name="mpwd" onkeypress="return isPassword(event);" placeholder="Password*" required="" type="password">
+                                        <input class="form-control" data-val="true" data-val-required="Password is required" id="mpwd" maxlength="25" name="mpwd"  placeholder="Password*" required="" type="password">
                                         <span class="field-validation-valid" data-valmsg-for="mpwd" data-valmsg-replace="true"></span>
 
                                     </div>
@@ -318,7 +319,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-12">
                                         <label for="form_username_email">Verify Password<span style="color:red">*</span></label>
-                                        <input class="form-control" data-val="true" data-val-equalto="The password and confirmation password do not match." data-val-equalto-other="*.mpwd" data-val-required="Confirm Password is required" id="ConfirmPass" maxlength="25" name="ConfirmPass" onkeypress="return isPassword(event);" placeholder="Verify Password*" required="" type="password">
+                                        <input class="form-control" data-val="true" data-val-equalto="The password and confirmation password do not match." data-val-equalto-other="*.mpwd" data-val-required="Confirm Password is required" id="ConfirmPass" maxlength="25" name="ConfirmPass"  placeholder="Verify Password*" required="" type="password">
                                         <span class="field-validation-valid" data-valmsg-for="ConfirmPass" data-valmsg-replace="true"></span>
 
                                     </div>
@@ -331,7 +332,7 @@
 
                                     <div class="form-group col-md-12">
                                         <label for="form_username_email">Security Pin<span style="color:red">*</span></label>
-                                        <input class="form-control" data-val="true" data-val-regex="Enter Valid Confirm Pin ID" data-val-regex-pattern="^([0-9]{4})$" data-val-required="Please Enter Confirm Pin ID" id="Confirmpin" max="9999" maxlength="4" min="-999" name="Confirmpin" onkeypress="return isPassword(event);" placeholder="Security Pin*" required="" type="password">
+                                        <input class="form-control" data-val="true" data-val-regex="Enter Valid Confirm Pin ID" data-val-regex-pattern="^([0-9]{4})$" data-val-required="Please Enter Confirm Pin ID" id="Confirmpin" max="9999" maxlength="4" min="-999" name="Confirmpin"  placeholder="Security Pin*" required="" type="password">
                                         <span class="field-validation-valid" data-valmsg-for="Confirmpin" data-valmsg-replace="true"></span>
                                     </div>
                                 </div>
@@ -340,7 +341,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-12">
                                         <label for="form_username_email">Verify Security Pin<span style="color:red">*</span></label>
-                                        <input class="form-control" data-val="true" data-val-regex="Enter Valid Pin ID" data-val-regex-pattern="^([0-9]{4})$" data-val-required="Please Enter Pin ID" id="pin" maxlength="4" name="pin" onkeypress="return isPassword(event);" placeholder="Verify Security Pin*" required="" type="password">
+                                        <input class="form-control" data-val="true" data-val-regex="Enter Valid Pin ID" data-val-regex-pattern="^([0-9]{4})$" data-val-required="Please Enter Pin ID" id="pin" maxlength="4" name="pin"  placeholder="Verify Security Pin*" required="" type="password">
                                         <span class="field-validation-valid" data-valmsg-for="pin" data-valmsg-replace="true"></span>
                                     </div>
                                 </div>
