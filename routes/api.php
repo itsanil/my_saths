@@ -14,13 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::GET('getCategoryBanner', 'Api\CategoryController@getCategoryBanner');
 
-Route::GET('getBrandBanner', 'Api\CategoryController@getBrandBanner');
-
-Route::GET('getBrandProductList', 'Api\CategoryController@getBrandProductList');
-
-Route::GET('gettagproduct', 'Api\CategoryController@gettagproduct');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
