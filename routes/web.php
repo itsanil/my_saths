@@ -120,12 +120,19 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
-Route::group(['middleware' => 'role:customer|admin'], function() {
+Route::group(['middleware' => 'role:user|admin'], function() {
+    Route::get('/dashboard',function(){
+        return view('backend.dashboard');
+    });
+
+    Route::get('/login',function(){
+        return redirect('/dashboard');
+    });
     
 });
 
 
-Route::group(['middleware' => 'role:customer'], function() {
+Route::group(['middleware' => 'role:user'], function() {
     
 });
 

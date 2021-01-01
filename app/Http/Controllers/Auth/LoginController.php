@@ -31,23 +31,23 @@ class LoginController extends Controller
      */
      protected function authenticated(Request $request, $user)
     {
-        if($user->hasRole('offline')){
-            return redirect('/dynamic_pdf');
+        if($user->hasRole('admin')){
+            return redirect('/dashboard');
         }
 
-        if($user->hasRole('online')){
-            return redirect('/online-pdf');
+        if($user->hasRole('user')){
+            return redirect('/dashboard');
         }else{
-            return redirect('/home');
+            return redirect('/');
         }
 
         
     }
 
-      public function login(Request $request)
-      {
-        dd($request->all());
-      }
+      // public function login(Request $request)
+      // {
+      //   dd($request->all());
+      // }
     
 
     /**

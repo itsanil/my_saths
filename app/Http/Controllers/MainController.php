@@ -8,20 +8,10 @@ use Redirect;
 use Toastr;
 use Auth;
 use Response;
-use App\OtpVerification;
-use App\Customer;
 use App\User;
-use App\Brand;
-use App\Product;
-use App\ProductCombo;
-use App\ProductMaster;
-use App\Stock;
-use App\Area;
-use App\Tag;
-use App\Promotion;
-use App\HomeProduct;
-use App\ManageSgp;
+
 use Str;
+use Hash;
 use Carbon;
 use Illuminate\Support\Facades\Session;
 
@@ -69,35 +59,41 @@ class MainController extends Controller
 
   public function ValidateUser(Request $request) {
     $rules = array (
-      'name' => 'required',
-      'area_id' => 'required',
+      'username' => 'required|unique:users',
+      'email' => 'required|unique:users',
       'mobile' => 'required|numeric|digits:10|unique:users',
-      'contact_no' => 'nullable|numeric|digits:10|unique:customers',
-      'building_name' => 'required',
     );
-    // echo "<pre>"; print_r($request->all()); echo "</pre>"; die('end of code');
     $validator = Validator::make ( $request->all (), $rules );
     if ($validator->fails ()) {
       return Response::json(array('success'=>0 ,'message' => $validator->getMessageBag()->toArray()));
     } else {
-      $otp_data = OtpVerification::where('whatsapp_no',$request['whatsapp_no'])->orderBy('id','DESC')->where('is_verified','0')->first();
-      if (!empty($otp_data)) {
-        $old_time = strtotime($otp_data->created_at);
-            $time_diff = time() - $old_time;
-            if ($time_diff < 1800) {
-          return Response::json(array('success' => 1,'token'=>$otp_data->token,'message'=>'Please enter OTP to verify your account, OTP is valid for 30 mins.'));
-        }
-      }
-      $otp = rand(1000, 9999);
-      $token = Str::random(25);
-      $OtpVerification = new OtpVerification();
-      $OtpVerification->otp = $otp;
-      $OtpVerification->token = $token;
-      $OtpVerification->msg = "Use OTP: ".$otp." to login | Savita's Grocery";
-      $OtpVerification->whatsapp_no = $request->mobile;
-      $OtpVerification->save();
-      $this->SendOtp(array('mobile_no'=>$request->mobile,'otp'=>$otp));
-      return Response::json(array('success'=>1,'token'=>$token));
+
+      $user = new User();
+      $user->firstname = $request['MembName_F'];
+      $user->lastname = $request['MembName_L'];
+      $user->username = $request['username'];
+      $user->usertype = $request['USERTYPE'];
+      $user->dob = $request['DOB'];
+      $user->gender = $request['Gender'];
+      $user->phonecode = $request['phonecode'];
+      $user->mobile = $request['mobile'];
+      $user->email = $request['email'];
+      $user->password = Hash::make($request['mpwd']);
+      $user->security_pin = $request['pin'];
+      $user->country = $request['M_COUNTRY'];
+      $user->state = $request['State'];
+      $user->district = $request['District'];
+      $user->city = $request['City'];
+      $user->pinno = $request['pinno'];
+      $user->panno_aadharno = $request['PanNo'];
+      $user->campaign = $request['campaign'];
+      $user->remember_token = $request['_token'];
+      $user->save();
+      Auth::loginUsingId($user->id);
+      $user->attachRole('user');
+      return Response::json(array('success'=>1,'message'=>'Registration successful.'));
+      
+      
     }
   }
 

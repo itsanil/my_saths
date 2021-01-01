@@ -94,13 +94,17 @@
 
   // $(document).on('submit', '#submitUserForm', function() {
     $('#submitUserForm').on( "submit", function(){
-      alert('sdsd');
-    var formData = $('#submitUserForm').serialize();
+    var formData = new FormData($('#submitUserForm')[0]);
+    // var formData = $('#submitUserForm').serialize();
     var status = true;
-    if($('#EMail').val() != $('#ConfirmEMail').val() || $('#EMail').val() != $('#ConfirmEMail').val() || $('#EMail').val() != $('#ConfirmEMail').val()){
+    if($('#email').val() != $('#ConfirmEMail').val() || $('#mpwd').val() != $('#ConfirmPass').val() || $('#Confirmpin').val() != $('#pin').val() || $('#state').val() == '' || $('#M_COUNTRY').val() == ''){
       status = false;
+      toastr.error('something is wrong!..');
+      return false;
     }
-    $.ajax({
+    if(status){
+      formData. append( 'State', $('#state').val() );
+      $.ajax({
       type: 'POST',
       url: '{{ route("auth.validate") }}',
       processData: false,
@@ -112,80 +116,32 @@
       success: function(response) {
         if ((response.success == 1)) {
           toastr.success(response.message);
-          $("#otp_number").val('');
-          $("#token").val('');
-          $("#token").val(response.token);
-          $("#OtpModal").modal("show");
+          setTimeout(function(){
+            window.location.href = 'dashboard';
+          }, 2000);
           
         } else {
-          // toastr.error('The mobile has already been taken.');
-          // var alrtList = '<ui>';
-          $.each(response.message.building_name, function( index, value ) {
+          
+          $.each(response.message.username, function( index, value ) {
             toastr.error(value);
           });
-          $.each(response.message.contact_no, function( index, value ) {
-            toastr.error(value);
-          });
-          $.each(response.message.name, function( index, value ) {
+          $.each(response.message.email, function( index, value ) {
             toastr.error(value);
           });
           $.each(response.message.mobile, function( index, value ) {
             toastr.error(value);
           });
-          $.each(response.message.area_id, function( index, value ) {
-            toastr.error('area field is required');
-          });
-          // alrtList += '</ui>';
-          // toastr.error(alrtList);
         }
       },
       complete: function() {
         $('.loadingoverlay').css('display', 'none');
       },
     });
+    }
+   
   });
 
-  $(document).on('click', '#submitOtpForm', function() {
-    var formData = new FormData($('#otpForm')[0]);
-    $.ajax({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      type: 'POST',
-      url: '{{ route("auth.register") }}',
-      data: {
-        '_token': $('input[name=_token]').val()
-        ,'otp_number': $('#otp_number').val()
-        ,'token': $('#token').val()
-        ,'name' : $("#name").val()
-        ,'contact_no' : $("#contact_no").val()
-        ,'city' : $("#city").val()
-        ,'area_id' : $("#area_id").val()
-        ,'building_name' : $("#search").val()
-        ,'mobile' : $("#mobile").val()
-        ,'lane' : $("#lane").val()
-        ,'flat_no' : $("#flat_no").val()
-      },
-      beforeSend: function() {
-        $('.loadingoverlay').css('display', 'block');
-      },
-      success: function(response) {
-        if ((response.success == 1)) {
-          $("#OtpModal").modal("hide");
-          toastr.success(response.message);
-          setTimeout(function(){
-            window.location.href = 'home';
-          }, 2000);
-          
-        } else {
-         toastr.error(response.message);
-        }
-      },
-      complete: function() {
-        $('.loadingoverlay').css('display', 'none');
-      },
-    });
-  });
+
 </script>
 <script>
   $(function () {
@@ -193,7 +149,7 @@
     $('.select2').select2();
   });
 </script>
-    State_name
+    
 @endsection
 @section('content')
 <div id="india_state">
@@ -215,8 +171,8 @@
                     <div class="col-md-12">
                         <p class="text-center">We'll never post anything without your permission. And you can choose to stay anonymous!</p>
                     </div>
-                <form id="submitUserForm" method="POST">  
-                                          <div class="row">
+                <form id="submitUserForm" class="FormValidate" method="POST" role="form" onsubmit="return false" >
+                @csrf                            <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="form_username_email">USER TYPE<span style="color:red">*</span></label>
@@ -288,7 +244,7 @@
 
                                     <div class="form-group col-md-12">
                                         <label for="form_password">Email Address<span style="color:red">*</span></label>
-                                        <input class="form-control" data-val="true" data-val-regex="Enter Valid Email ID" data-val-regex-pattern="^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z\-])+\.)+([a-zA-Z]{2,6})$" data-val-required="Please Enter Email ID" id="EMail" maxlength="50" name="EMail" placeholder="Email Address*" required="" type="email" value="">
+                                        <input class="form-control" data-val="true" data-val-regex="Enter Valid Email ID" data-val-regex-pattern="^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z\-])+\.)+([a-zA-Z]{2,6})$" data-val-required="Please Enter Email ID" id="email" maxlength="50" name="email" placeholder="Email Address*" required="" type="email" value="">
                                         <span class="field-validation-valid" data-valmsg-for="EMail" data-valmsg-replace="true"></span>
                                     </div>
                                 </div>
@@ -371,7 +327,7 @@
                                            <div class="row">
                                                <div class="form-group col-md-12">
                                                    <label for="State">State<span style="color:red"></span></label>
-                                                   <select class="form-control" id="State_select" name="State"><option value="">Select State</option>
+                                                   <select class="form-control" id="State_select" name="State" ><option value="">Select State</option>
 </select>
                                                </div>
                                            </div>
@@ -381,7 +337,7 @@
                                            <div class="row">
                                                <div class="form-group col-md-12">
                                                    <label for="State">State<span style="color:red"></span></label>
-                                                   <input class="form-control" id="State" name="State_name" placeholder="State"  type="text" value="">
+                                                   <input class="form-control" id="State" name="State" placeholder="State"  type="text" value="">
                                                </div>
                                            </div>
                                        </div>
@@ -633,7 +589,7 @@
                                             </div>
 
                                             <div class="col-md-8 col-xs-8" style="padding-left:0px;">
-                                                <input class="form-control" id="Mobile_No" maxlength="30" name="Mobile_No" placeholder="MOBILE NUMBER" required="" type="number" value="">
+                                                <input class="form-control" id="Mobile_No" maxlength="30" name="mobile" placeholder="MOBILE NUMBER" required="" type="number" value="">
                                                 <span class="field-validation-valid" data-valmsg-for="Mobile_No" data-valmsg-replace="true"></span>
                                                 
                                             </div>
@@ -673,7 +629,7 @@
 
 
 
-                                            <select class="form-control" id="campaign" required="" name="campaign"><option value="Select Campaign Category">Select Campaign Category</option>
+                                            <select class="form-control" id="campaign" required="" name="campaign"><option value="">Select Campaign Category</option>
 <option value="ADOPTION">ADOPTION</option>
 <option value="ANIMALS PROTECTIONS">ANIMALS PROTECTIONS</option>
 <option value="ART &amp; CRAFTS">ART &amp; CRAFTS</option>

@@ -98,7 +98,7 @@ height: auto;
                                         <a href="#ex1" rel="modal:open"> <i class='fa fa-arrow-right'></i> Start A Fundraiser</a>
 
                                         <!-- </div> --></li>
-                                        <li><a href="#">Log In</a></li>
+                                        <li><a href="{{ url('/login') }}">Log In</a></li>
                                         <li><a href="{{ url('/about') }}">About</a></li>
                                         <li><div id="google_translate_element">
                                            
