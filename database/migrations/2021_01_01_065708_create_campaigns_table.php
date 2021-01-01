@@ -13,10 +13,18 @@ class CreateCampaignsTable extends Migration
      */
     public function up()
     {
-        Schema::create('campaigns', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('campaigns')) {
+            Schema::create('campaigns', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('category_id')->nullable()->unsigned()->index();
+                $table->text('discription');
+                $table->timestamps();
+
+                $table->foreign('category_id')
+                ->references('id')->on('campaign')
+                ->onDelete('cascade');
+            });
+        }
     }
 
     /**
