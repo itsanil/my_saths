@@ -18,6 +18,8 @@ class CreateCampaignsTable extends Migration
                 $table->increments('id');
                 $table->integer('category_id')->nullable()->unsigned()->index();
                 $table->text('discription');
+                $table->string('photo');
+                $table->string('status');
                 $table->timestamps();
 
                 $table->foreign('category_id')

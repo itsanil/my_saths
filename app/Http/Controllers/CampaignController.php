@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Campaign;
+use App\CampaignCategory;
 use Illuminate\Http\Request;
+use Validator;
 
 class CampaignController extends Controller
 {
@@ -18,6 +20,11 @@ class CampaignController extends Controller
         return view('backend.campaign.index',compact('data'));
     }
 
+    public function campaignview(){
+        $data = Campaign::with('campaign')->where('category_id',$_GET['id'])->first();
+        return view('frontend.campaign_view',compact('data'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -25,7 +32,8 @@ class CampaignController extends Controller
      */
     public function create()
     {
-        //
+        $data = CampaignCategory::all();
+        return view('backend.campaign.create',compact('data'));
     }
 
     /**
@@ -36,7 +44,30 @@ class CampaignController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // echo "<pre>"; print_r($request->all()); echo "</pre>"; die('end of code');
+        $rules = array (
+          'category_id' => 'required|unique:campaigns',
+        );
+        $validator = Validator::make ( $request->all (), $rules );
+        if ($validator->fails ()) {
+            return Redirect::back()
+                            ->withErrors($validator)
+                            ->withInput();
+        } else {
+            if($request->file('photo')){
+                $campaign_photo= $request->file('photo');
+                $photo_name = time().round(1000,9999).'.'.$campaign_photo->getClientOriginalExtension();
+                $campaign_photo->move(storage_path('app/campaign/'), $photo_name);
+                $campaign_photo_url = 'app/campaign/'.$photo_name;
+            }
+            $campaign = new Campaign();
+            $campaign->category_id = $request['category_id'];
+            $campaign->discription = $request['description'];
+            $campaign->status = $request['status'];
+            $campaign->photo = $campaign_photo_url;
+            $campaign->save();
+            return redirect('campaigns')->with(['success'=> 'campaigns Added!!']);
+        }
     }
 
     /**
@@ -58,7 +89,8 @@ class CampaignController extends Controller
      */
     public function edit(Campaign $campaign)
     {
-        //
+        $data = CampaignCategory::all();
+        return view('backend.campaign.edit',compact('campaign','data'));
     }
 
     /**
@@ -70,7 +102,18 @@ class CampaignController extends Controller
      */
     public function update(Request $request, Campaign $campaign)
     {
-        //
+        if($request->file('photo')){
+                $campaign_photo= $request->file('photo');
+                $photo_name = time().round(1000,9999).'.'.$campaign_photo->getClientOriginalExtension();
+                $campaign_photo->move(storage_path('app/campaign/'), $photo_name);
+                $campaign_photo_url = 'app/campaign/'.$photo_name;
+                $campaign->photo = $campaign_photo_url;
+            }
+        $campaign->discription = $request['description'];
+        $campaign->status = $request['status'];
+        $campaign->save();
+        return redirect('campaigns')->with(['success'=> 'campaigns Updated!!']);
+
     }
 
     /**

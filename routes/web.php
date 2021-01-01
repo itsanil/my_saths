@@ -75,6 +75,10 @@ Route::get('/contact',function(){
 
 
 
+Route::get('/campaign-view', 'CampaignController@campaignview')->name('campaign-view');
+
+
+
 
 
 

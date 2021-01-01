@@ -4,15 +4,10 @@
   <meta charset="utf-8"/>
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <meta name="description" content="Savita's Grocery Online - Choose and Buy Online Grocery from a wide range of quality products at discounted prices and much more. Shop Now !"/>
-  <meta name="keywords" content="Online Grocery, Staples, Fortune, Ram Bandhu, Pickle, Papad, Rice, Oil, Atta, Snacks, Khakra, Grocery Discount, Free Delivery,Savita Grocery, Savita's Grocery, Savitas Grocery " />
-  <link rel="canonical" href="https://www.sgonline.in" />
-  <meta property="og:site_name" content="Savita's Grocery" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Buy Grocery Online | Quality Products at discounted prices - Savita's Grocery" />
-  <meta property="og:description" content="Savita's Grocery - Choose and Buy Online Grocery from a wide range of quality products at discounted prices and much more. Shop Now !" />
-  <meta property="og:url" content="https://www.sgonline.in" />
-  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('public/frontend/img/favicon.png') }}">
   <title>{{ config('app.name') }} | @yield('title')</title>
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('public/images/favicon_io/apple-touch-icon.png') }}">
   <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('public/images/favicon_io/favicon-32x32.png') }}">
