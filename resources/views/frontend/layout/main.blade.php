@@ -269,7 +269,7 @@ individuals or any organisation to raise funds for their causes digitally.
                                 <li><a href="{{ url('/trust_and_safety') }}">Trust &amp; Safety</a></li>
                                 <li><a href="{{ url('/contact') }}">Contact Us</a></li>
                                 <li><a href="{{ url('/mediacontact') }}">Media Contact</a></li>
-                                <li><a href="legal-document.pdf">Legal Document</a></li>
+                                <li><a href="{{ asset('public/pdf/legal-document.pdf') }}" target="_blank">Legal Document</a></li>
                                 
                             </ul>
                         </div>

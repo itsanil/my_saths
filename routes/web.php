@@ -14,6 +14,71 @@ Route::get('/how_it_work',function(){
 Route::get('/campaign',function(){
     return view('frontend.campaign');
 });
+Route::get('/explore',function(){
+    return view('frontend.explore');
+});
+
+
+Route::get('/real-estate-and-business-crowdfunding',function(){
+    return view('frontend.real-estate-and-business-crowdfunding');
+});
+
+Route::get('/fundresingcost',function(){
+    return view('frontend.fundresingcost');
+});
+Route::get('/fundraisingideas',function(){
+    return view('frontend.fundraisingideas');
+});
+Route::get('/terms',function(){
+    return view('frontend.terms');
+});
+Route::get('/policy_and_procedure',function(){
+    return view('frontend.policy_and_procedure');
+});
+Route::get('/what-is-crowdfunding',function(){
+    return view('frontend.what-is-crowdfunding');
+});
+Route::get('/work_with_us',function(){
+    return view('frontend.work_with_us');
+});
+Route::get('/partner_with_us',function(){
+    return view('frontend.partner_with_us');
+});
+Route::get('/pricing',function(){
+    return view('frontend.pricing');
+});
+Route::get('/faq',function(){
+    return view('frontend.faq');
+});
+Route::get('/guidelines',function(){
+    return view('frontend.guidelines');
+});
+Route::get('/report',function(){
+    return view('frontend.report');
+});
+Route::get('/promotion',function(){
+    return view('frontend.promotion');
+});
+Route::get('/projectrules',function(){
+    return view('frontend.projectrules');
+});
+Route::get('/trust_and_safety',function(){
+    return view('frontend.trust_and_safety');
+});
+Route::get('/mediacontact',function(){
+    return view('frontend.mediacontact');
+});
+
+Route::get('/contact',function(){
+    return view('frontend.contact');
+});
+
+
+
+
+
+
+
 
 Route::get('/about',function(){
     return view('frontend.about');
