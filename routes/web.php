@@ -22,6 +22,8 @@ Route::get('/about',function(){
 
 
 
+
+
 Route::post('/auth/register', ['as' => 'auth.register', 'uses' => 'MainController@Register']);
 Route::post('/auth/validate', ['as' => 'auth.validate', 'uses' => 'MainController@ValidateUser']);
 
@@ -113,6 +115,7 @@ Route::get('/contact-us', function () {
 Route::get('/home', 'HomeController@index')->name('home');
 
     Route::group(['middleware' => 'role:admin'], function() {
+        Route::resource('campaigns','CampaignController');
         //user
     
 });
@@ -125,7 +128,7 @@ Route::group(['middleware' => 'role:user|admin'], function() {
         return view('backend.dashboard');
     });
 
-    Route::get('/login',function(){
+    Route::get('/home',function(){
         return redirect('/dashboard');
     });
     

@@ -630,36 +630,10 @@
 
 
                                             <select class="form-control" id="campaign" required="" name="campaign"><option value="">Select Campaign Category</option>
-<option value="ADOPTION">ADOPTION</option>
-<option value="ANIMALS PROTECTIONS">ANIMALS PROTECTIONS</option>
-<option value="ART &amp; CRAFTS">ART &amp; CRAFTS</option>
-<option value="BUY A HOME">BUY A HOME</option>
-<option value="BUILDING &amp; CONSTRUCTION">BUILDING &amp; CONSTRUCTION</option>
-<option value="COMMUNITY &amp; SOCIETY">COMMUNITY &amp; SOCIETY</option>
-<option value="CREATIVE PROJECTS">CREATIVE PROJECTS</option>
-<option value="DANCE">DANCE</option>
-<option value="DEVELOP A SOFTWARE">DEVELOP A SOFTWARE</option>
-<option value="EDUCATIONS">EDUCATIONS</option>
-<option value="EMERGENCIES">EMERGENCIES</option>
-<option value="ENERGY &amp; ENVIRONMENTS">ENERGY &amp; ENVIRONMENTS</option>
-<option value="EVENTS">EVENTS</option>
-<option value="FAMILY">FAMILY</option>
-<option value="FILMS/VIDEO">FILMS/VIDEO</option>
-<option value="FOOD">FOOD</option>
-<option value="GET OUT OF DEBTS">GET OUT OF DEBTS</option>
-<option value="HOLIDAYS">HOLIDAYS</option>
-<option value="MEDICAL &amp; HEALTH">MEDICAL &amp; HEALTH</option>
-<option value="MEMORIALS &amp; FUNERALS">MEMORIALS &amp; FUNERALS</option>
-<option value="MILITARY &amp; VETERANS">MILITARY &amp; VETERANS</option>
-<option value="NON PROFITS &amp; CHARITY">NON PROFITS &amp; CHARITY</option>
-<option value="ORGANISATIONS">ORGANISATIONS</option>
-<option value="PETS">PETS</option>
-<option value="PUBLISH A BOOK">PUBLISH A BOOK</option>
-<option value="REPAY A LOAN">REPAY A LOAN</option>
-<option value="SPORTS">SPORTS</option>
-<option value="SPECIAL OCCASIONS">SPECIAL OCCASIONS</option>
-<option value="TO START/FUND BUSINESS">TO START/FUND BUSINESS</option>
-<option value="TRAVEL/TRIPS">TRAVEL/TRIPS</option>
+                                              @foreach($category as $c)
+                                              <option value="{{ $c->title }}">{{ $c->title }}</option>
+@endforeach
+
 </select>
                                         </div>
                                     </div>

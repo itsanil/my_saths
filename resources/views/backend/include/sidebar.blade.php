@@ -59,7 +59,14 @@
             <?php
             if(!empty(Auth::user())){ ?>
             @if(Auth::user()->hasRole('admin'))
-              
+              <li class="nav-item ">
+                <a href="{{ url('/campaigns') }}" class="nav-link {{ (request()->is('campaigns')) ? 'active' : '' }}">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    Campaign
+                  </p>
+                </a>
+              </li>
             @endif
               
           <?php }
