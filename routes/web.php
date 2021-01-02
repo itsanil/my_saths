@@ -1,10 +1,13 @@
 <?php
 
+use App\CampaignCategory;
+
 
 
 
 Route::get('/',function(){
-    return view('frontend.main');
+    $category = CampaignCategory::where('status','Active')->get();
+    return view('frontend.main',compact('category'));
 });
 
 Route::get('/how_it_work',function(){
@@ -185,6 +188,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
     Route::group(['middleware' => 'role:admin'], function() {
         Route::resource('campaigns','CampaignController');
+        Route::resource('campaign-category','CampaignCategoryController');
+
+        Route::post('campaign-category-update', [
+          'as' => 'campaign-category-update',
+          'uses' => 'CampaignCategoryController@categoryupdate'
+        ]);
         //user
     
 });

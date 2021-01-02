@@ -59,13 +59,28 @@
             <?php
             if(!empty(Auth::user())){ ?>
             @if(Auth::user()->hasRole('admin'))
-              <li class="nav-item ">
-                <a href="{{ url('/campaigns') }}" class="nav-link {{ (request()->is('campaigns')) ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
+              <li class="nav-item has-treeview {{ (request()->is('campaign-category*')) ? 'menu-open' : '' }} {{ (request()->is('campaigns*')) ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ (request()->is('campaign-category*')) ? 'active' : '' }} {{ (request()->is('campaigns*')) ? 'active' : '' }}">
+                  <i class="nav-icon fas fa-heart"></i>
                   <p>
                     Campaign
+                    <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ url('/campaign-category') }}" class="nav-link {{ (request()->is('campaign-category*')) ? 'active' : '' }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Category</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ url('/campaigns') }}" class="nav-link {{ (request()->is('campaigns*')) ? 'active' : '' }}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Campaign Fundraising</p>
+                    </a>
+                  </li>
+                </ul>
               </li>
             @endif
               
