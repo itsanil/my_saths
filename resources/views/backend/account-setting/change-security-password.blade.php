@@ -1,6 +1,6 @@
 @extends('backend.main')
-@section('title', 'Edit Profile')
-@section('section_page', 'Edit Profile')
+@section('title', 'Change Security Password')
+@section('section_page', 'Change Security Password')
 @section('css')
 
 <!-- DataTables -->
@@ -136,7 +136,7 @@ p {
             <a href="{{ url('/dashboard') }}">Dashboard</a>
         </li>
         <li class="active">/ Profile /</li>
-        <li class="active">Edit Profile</li>
+        <li class="active">Change Security Password</li>
     </ul>
 </div>
       

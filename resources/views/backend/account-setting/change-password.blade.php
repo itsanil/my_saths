@@ -1,6 +1,6 @@
 @extends('backend.main')
-@section('title', 'Edit Profile')
-@section('section_page', 'Edit Profile')
+@section('title', 'Change Password')
+@section('section_page', 'Change Password')
 @section('css')
 
 <!-- DataTables -->

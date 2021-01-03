@@ -1,6 +1,6 @@
 @extends('backend.main')
-@section('title', 'Edit Profile')
-@section('section_page', 'Edit Profile')
+@section('title', 'Payout Settings')
+@section('section_page', 'Payout Settings')
 @section('css')
 
 <!-- DataTables -->
@@ -189,7 +189,7 @@ element.style {
             <a href="{{ url('/dashboard') }}">Dashboard</a>
         </li>
         <li class="active">/ Profile /</li>
-        <li class="active">Edit Profile</li>
+        <li class="active">Payout Settings</li>
     </ul>
 </div>
 
