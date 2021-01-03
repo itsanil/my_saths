@@ -133,7 +133,7 @@ p {
 
 
 <div class="page-heading">
-    <h3>Edit Profile</h3>
+    <h3>Account Setting</h3>
     <ul class="breadcrumb">
         <li>
             <a href="{{ url('/dashboard') }}">Dashboard</a>
@@ -143,7 +143,7 @@ p {
     </ul>
 </div>
 
-<div class="row">
+
    <div class="wrapper">
     <div class="row">
         <div class="col-md-7">
@@ -249,7 +249,7 @@ p {
         </div>
     </div>
 </div>
-</div>
+
 
 
 @endsection

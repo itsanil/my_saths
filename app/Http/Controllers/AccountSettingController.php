@@ -45,6 +45,28 @@ class AccountSettingController extends Controller
          // dd($data);
         return view('backend.account-setting.change-mobile-email',compact('data'));
     }
+    public function changeSecurityPassword(){
+        $user_id=\Auth::id();
+         $data = User::findorfail($user_id);
+         // dd($data);
+        return view('backend.account-setting.change-security-password',compact('data'));
+    }
+    public function payoutSettings(){
+        $user_id=\Auth::id();
+         $data = User::findorfail($user_id);
+         // dd($data);
+        return view('backend.account-setting.payout-settings',compact('data'));
+    }
+    public function showVerification(){
+        $user_id=\Auth::id();
+         $data = User::findorfail($user_id);
+         // dd($data);
+        return view('backend.account-setting.show-verification',compact('data'));
+    }
+
+    
+    
+    
     
 
     /**

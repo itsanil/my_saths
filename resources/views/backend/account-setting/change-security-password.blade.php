@@ -136,51 +136,66 @@ p {
             <a href="{{ url('/dashboard') }}">Dashboard</a>
         </li>
         <li class="active">/ Profile /</li>
-        <li class="active">Change Password</li>
+        <li class="active">Edit Profile</li>
     </ul>
 </div>
       
-
- <div class="wrapper">
+<div class="wrapper">
     <!--Main row -->
+    <!-- Widgets Row -->
     <div class="row">
-        <div class="col-lg-7">
+        <div class="col-lg-9">
+            <!-- Basic Form Elements Block -->
             <section class="panel">
-                <!-- END Form Elements Title -->
                 <div class="panel-body">
-                    <form action="" method="post" class="form-horizontal form-bordered" id="changepassword" autocomplete="off" onsubmit="return false;" novalidate="novalidate">
+                    <!-- Basic Form Elements Title -->
+                    <!-- END Form Elements Title -->
+                                        <form action="change_ewallet_password" method="post" class="form-horizontal form-bordered" id="changetransactionpassword" autocomplete="off" onsubmit="return false;" novalidate="novalidate">
+                        <input name="userid" class="input_bg userid" type="hidden" id="userid" value="50">
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="oldpassword">Enter current password *</label>
-                            <div class="col-md-8">
-                                <input type="password" id="oldpassword" name="oldpassword" class="form-control" placeholder="Enter current password">
-                                <span class="" id="oldpassword_status"></span>
+                            <label class="col-md-3 control-label" for="tran_oldpassword">Current Security PIN *</label>
+                            <div class="col-md-6">
+                                <input type="password" id="tran_oldpassword" name="tran_oldpassword" class="form-control" placeholder="Enter Current Security PIN">
+                                <span class="" id="tran_oldpassword_status"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="newpassword">Enter new password *</label>
-                            <div class="col-md-8">
-                                <input type="password" id="newpassword" name="newpassword" class="form-control" placeholder="Enter new password">
+                            <label class="col-md-3 control-label" for="tran_newpassword">New Security PIN *</label>
+                            <div class="col-md-6">
+                                <input type="password" id="tran_newpassword" name="tran_newpassword" class="form-control" placeholder="Enter New Security PIN ">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="confirmpassword">Retype new password *</label>
-                            <div class="col-md-8">
-                                <input type="password" id="confirmpassword" name="confirmpassword" class="form-control" placeholder="Retype new password">
+                            <label class="col-md-3 control-label" for="tran_confirmpassword">Retype Security PIN *</label>
+                            <div class="col-md-6">
+                                <input type="password" id="tran_confirmpassword" name="tran_confirmpassword" class="form-control" placeholder="Retype new Security PIN">
                             </div>
                         </div>
                         <div class="form-group form-actions">
-                            <div class="col-md-9 col-md-offset-4">
-                                <button name="Send" type="submit" class="btn btn-md btn-primary" id="update_password"><i class="fa fa-angle-right"></i><span> Update</span></button>
+                            <label class="col-md-3 control-label" for="tran_confirmpassword"></label>
+                            <div class="col-md-6 ">
+                                <button name="Send" type="submit" class="btn btn-md btn-primary" id="update_transaction_password"><i class="fa fa-angle-right"></i><span> Update</span></button>
                                 <button type="reset" class="btn btn-md btn-warning"><i class="fa fa-repeat"></i> Reset</button>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">&nbsp;</label>
+                            <div class="col-md-6 link_font">
+                                <a href="javascript:void(0)" id="forgot_sec_pwd"><small>Forgot Security PIN?</small></a>
+                            </div>
+                        </div>
+                        <div class="alert alert-success" id="forgot_mess" style="display:none;">
+                          
+                           
                         </div>
                     </form>
                     <!-- END Basic Form Elements Content -->
                 </div>
             </section>
+
+            <!-- END Basic Form Elements Block -->
         </div>
     </div>
 </div>
-
 
 @endsection

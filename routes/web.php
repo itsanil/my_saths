@@ -200,6 +200,9 @@ Route::get('/home', 'HomeController@index')->name('home');
         Route::get('/view-profile', 'AccountSettingController@viewProfile')->name('view-profile');
         Route::get('/change-password', 'AccountSettingController@changePassword')->name('change-password');
          Route::get('/change-mobile-or-email', 'AccountSettingController@changeMobileEmail')->name('change-mobile-or-email');
+          Route::get('/change-security-password', 'AccountSettingController@changeSecurityPassword')->name('change-security-password');
+          Route::get('/payout-settings', 'AccountSettingController@payoutSettings')->name('payout-settings');
+          Route::get('/show-verification', 'AccountSettingController@showVerification')->name('show-verification');
         
     
 });

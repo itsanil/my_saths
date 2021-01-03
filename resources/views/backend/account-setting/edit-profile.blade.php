@@ -130,7 +130,7 @@ p {
 
 
          <div class="page-heading">
-    <h3>Edit Profile</h3>
+    <h3>Account Setting</h3>
     <ul class="breadcrumb">
         <li>
             <a href="{{ url('/dashboard') }}">Dashboard</a>

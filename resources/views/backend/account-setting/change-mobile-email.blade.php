@@ -142,7 +142,7 @@ p {
     </ul>
 </div>
       
-<div class="row">
+
   <div class="wrapper">
     <div class="row">
         <div class="col-sm-12">
@@ -229,7 +229,7 @@ p {
             </section>
         </div>
     </div>
-</div>
+
  </div>
 
 @endsection

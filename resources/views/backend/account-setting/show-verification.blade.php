@@ -1,6 +1,6 @@
 @extends('backend.main')
-@section('title', 'Edit Profile')
-@section('section_page', 'Edit Profile')
+@section('title', 'Show Verification')
+@section('section_page', 'Show Verification')
 @section('css')
 
 <!-- DataTables -->
@@ -136,51 +136,54 @@ p {
             <a href="{{ url('/dashboard') }}">Dashboard</a>
         </li>
         <li class="active">/ Profile /</li>
-        <li class="active">Change Password</li>
+        <li class="active">Show Verification</li>
     </ul>
 </div>
-      
-
- <div class="wrapper">
-    <!--Main row -->
+      <div class="wrapper">
     <div class="row">
-        <div class="col-lg-7">
-            <section class="panel">
-                <!-- END Form Elements Title -->
+        <div class="col-md-12">
+            <div class="panel panel-default">
                 <div class="panel-body">
-                    <form action="" method="post" class="form-horizontal form-bordered" id="changepassword" autocomplete="off" onsubmit="return false;" novalidate="novalidate">
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="oldpassword">Enter current password *</label>
-                            <div class="col-md-8">
-                                <input type="password" id="oldpassword" name="oldpassword" class="form-control" placeholder="Enter current password">
-                                <span class="" id="oldpassword_status"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="newpassword">Enter new password *</label>
-                            <div class="col-md-8">
-                                <input type="password" id="newpassword" name="newpassword" class="form-control" placeholder="Enter new password">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="confirmpassword">Retype new password *</label>
-                            <div class="col-md-8">
-                                <input type="password" id="confirmpassword" name="confirmpassword" class="form-control" placeholder="Retype new password">
-                            </div>
-                        </div>
-                        <div class="form-group form-actions">
-                            <div class="col-md-9 col-md-offset-4">
-                                <button name="Send" type="submit" class="btn btn-md btn-primary" id="update_password"><i class="fa fa-angle-right"></i><span> Update</span></button>
-                                <button type="reset" class="btn btn-md btn-warning"><i class="fa fa-repeat"></i> Reset</button>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- END Basic Form Elements Content -->
+                    <table id="example5" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Created on</th>
+                                <th>Proof for</th>
+                                <th>Document Type</th>
+                                <th>Verification</th>
+<!--                                <th>View</th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                                                                <tr>
+                                        <td>18-Dec-2017 10:45:50 </td>
+                                        <td>Address Proof </td>
+                                        <td>Bank Statement </td>
+                                        <td class="text-center"><p><span class="label label-success">Verified</span>                                        </p></td>
+        <!--                                        <td>
+                                                                                </td>-->
+                                    </tr>
+                                                                        <tr>
+                                        <td>14-Oct-2016 05:32:12 </td>
+                                        <td>ID Proof </td>
+                                        <td>National ID </td>
+                                        <td class="text-center"><p><span class="label label-success">Verified</span>                                        </p></td>
+        <!--                                        <td>
+                                                                                </td>-->
+                                    </tr>
+                                                                        <tr>
+                                        <td>14-Oct-2016 05:30:00 </td>
+                                        <td>TAX ID Proof </td>
+                                        <td>Tax Document </td>
+                                        <td class="text-center"><p><span class="label label-success">Verified</span>                                        </p></td>
+        <!--                                        <td>
+                                                                                </td>-->
+                                    </tr>
+                                                            </tbody>
+                    </table>
                 </div>
-            </section>
+            </div>
         </div>
     </div>
 </div>
-
-
 @endsection

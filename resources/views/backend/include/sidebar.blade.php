@@ -59,8 +59,11 @@
             <?php
             if(!empty(Auth::user())){ ?>
             @if(Auth::user()->hasRole('admin'))
-             <li class="nav-item has-treeview {{ (request()->is('account-setting*')) ? 'menu-open' : '' }} {{ (request()->is('edit-profile*')) ? 'menu-open' : '' }}  {{ (request()->is('view-profile*')) ? 'menu-open' : '' }} {{ (request()->is('change-password*')) ? 'menu-open' : '' }}  {{ (request()->is('change-mobile-or-email*')) ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ (request()->is('account-setting*')) ? 'active' : '' }} {{ (request()->is('edit-profile*')) ? 'active' : '' }} {{ (request()->is('view-profile*')) ? 'active' : '' }} {{ (request()->is('change-password*')) ? 'active' : '' }}  {{ (request()->is('change-mobile-or-email*')) ? 'active' : '' }}">
+             <li class="nav-item has-treeview {{ (request()->is('account-setting*')) ? 'menu-open' : '' }} {{ (request()->is('edit-profile*')) ? 'menu-open' : '' }}  {{ (request()->is('view-profile*')) ? 'menu-open' : '' }} {{ (request()->is('change-password*')) ? 'menu-open' : '' }}  {{ (request()->is('change-mobile-or-email*')) ? 'menu-open' : '' }} {{ (request()->is('change-security-password*')) ? 'menu-open' : '' }} {{ (request()->is('payout-settings*')) ? 'menu-open' : '' }} {{ (request()->is('show-verification*')) ? 'menu-open' : '' }}">
+              
+                <a href="#" class="nav-link {{ (request()->is('account-setting*')) ? 'active' : '' }} {{ (request()->is('edit-profile*')) ? 'active' : '' }} {{ (request()->is('view-profile*')) ? 'active' : '' }} {{ (request()->is('change-password*')) ? 'active' : '' }}  {{ (request()->is('change-mobile-or-email*')) ? 'active' : '' }} {{ (request()->is('change-security-password*')) ? 'active' : '' }} {{ (request()->is('payout-settings*')) ? 'active' : '' }} {{ (request()->is('show-verification*')) ? 'active' : '' }}">
+                  
+                  
                   <i class="nav-icon fas fa-cogs"></i>
                   <p>
                     Account Settings
@@ -81,32 +84,32 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ url('/change-mobile-or-email') }}" class="nav-link {{ (request()->is('change-mobile-or-email*')) ? 'active' : '' }}">
+                    <a href="{{ url('/change-password') }}" class="nav-link {{ (request()->is('change-password*')) ? 'active' : '' }}">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Change Password</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ url('/campaigns') }}" class="nav-link {{ (request()->is('campaigns*')) ? 'active' : '' }}">
+                    <a href="{{ url('/change-mobile-or-email') }}" class="nav-link {{ (request()->is('change-mobile-or-email*')) ? 'active' : '' }}">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Change Email/Mobile No.</p>
                     </a>
                   </li>
                   
                   <li class="nav-item">
-                    <a href="{{ url('/campaigns') }}" class="nav-link {{ (request()->is('campaigns*')) ? 'active' : '' }}">
+                    <a href="{{ url('/change-security-password') }}" class="nav-link {{ (request()->is('change-security-password*')) ? 'active' : '' }}">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Change Security PIN</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ url('/campaigns') }}" class="nav-link {{ (request()->is('campaigns*')) ? 'active' : '' }}">
+                    <a href="{{ url('/payout-settings') }}" class="nav-link {{ (request()->is('payout-settings*')) ? 'active' : '' }}">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Assignment Settings</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ url('/campaigns') }}" class="nav-link {{ (request()->is('campaigns*')) ? 'active' : '' }}">
+                    <a href="{{ url('/show-verification') }}" class="nav-link {{ (request()->is('show-verification*')) ? 'active' : '' }}">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Verify Your Identity/KYC</p>
                     </a>
