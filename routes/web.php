@@ -194,7 +194,13 @@ Route::get('/home', 'HomeController@index')->name('home');
           'as' => 'campaign-category-update',
           'uses' => 'CampaignCategoryController@categoryupdate'
         ]);
-        //user
+        //account
+        Route::resource('account-setting','AccountSettingController');
+        Route::get('/edit-profile', 'AccountSettingController@editProfile')->name('edit-profile');
+        Route::get('/view-profile', 'AccountSettingController@viewProfile')->name('view-profile');
+        Route::get('/change-password', 'AccountSettingController@changePassword')->name('change-password');
+         Route::get('/change-mobile-or-email', 'AccountSettingController@changeMobileEmail')->name('change-mobile-or-email');
+        
     
 });
 
