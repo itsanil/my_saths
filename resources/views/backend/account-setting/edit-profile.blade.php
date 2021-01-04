@@ -185,7 +185,7 @@ p {
                         <div class="form-group">
                             <label class="col-lg-4 col-sm-2 control-label">Signed up on:</label>
                             <div class="col-lg-8">
-                                <p class="form-control-static">01-Aug-2016 02:45:42</p>
+                                <p class="form-control-static">{{date('d-M-Y H:i:s',strtotime($user_data->created_at))}}</p>
                             </div>
                         </div>
                         <div class="form-group">
