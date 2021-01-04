@@ -230,8 +230,8 @@ p {
                                 <select name="user[sex]" class="form-control" id="sex" required="">
                                     <option value=""> Select Sex</option>
                                     <option value="Male" {{$user_data->gender=='Male'?'Selected':''}} >Male</option>
-                                    <option value="Female" >Female</option>
-                                    <option value="Transgender">Transgender</option>
+                                    <option value="Female" {{$user_data->gender=='Female'?'Selected':''}}  >Female</option>
+                                    <option value="Transgender" {{$user_data->gender=='Transgender'?'Selected':''}} >Transgender</option>
                                 </select>
                             </div>
                         </div>
