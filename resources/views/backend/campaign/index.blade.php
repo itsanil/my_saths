@@ -93,20 +93,33 @@
                         <tr>
                             <th>Sr No</th>
                             <th>Category</th>
+                            <th>Title</th>
+                            <th>Created on</th>
+                            <th>Updated on</th>
+                            <th>Fund</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
                         foreach ($data as $key => $value) {
-
                             echo "<tr>";
                                 echo "<td>".($key+1)."</td>";
                                 echo "<td>".$value->campaign->title."</td>";
+                                echo "<td>".$value->title."</td>";
+                                echo "<td>".$value->created_at."</td>";
+                                echo "<td>".$value->updated_at."</td>";
+                                
+                                echo "<td>".json_decode($value->project)->needed_amount."</td>";
+                                echo "<td>".$value->status."</td>";
                                 echo '<td><a class="btn btn-info btn-sm"  href="'.route('campaigns.edit',$value->id).'">
                                           <i class="fas fa-pencil-alt" >Edit
                                           </i>
-                                    </a></td>';
+                                    </a>
+                                    <a class="btn btn-info btn-sm" href="'.route('campaigns.show',$value->id).'"><i class="fas fa-eye" >Show
+                                          </i></a>
+    </td>';
                             echo "</tr>";
                         }
                         // <button type="button" onclick="Delete('.$value->id.')" class="btn btn-danger"><i class="mdi mdi-window-close"></i> </button>

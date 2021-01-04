@@ -6,6 +6,7 @@ use App\Campaign;
 use App\CampaignCategory;
 use Illuminate\Http\Request;
 use Validator;
+use Auth;
 
 class CampaignController extends Controller
 {
@@ -16,7 +17,7 @@ class CampaignController extends Controller
      */
     public function index()
     {
-        $data = Campaign::with('campaign')->get();
+        $data = Campaign::with('campaign')->where('added_by',Auth::User()->id)->get();
         return view('backend.campaign.index',compact('data'));
     }
 
@@ -64,6 +65,22 @@ class CampaignController extends Controller
             $campaign->category_id = $request['category_id'];
             $campaign->discription = $request['description'];
             $campaign->status = $request['status'];
+            $campaign->recipient_type = $request['recipient_type'];
+            $campaign->recipient_first_name = $request['recipient_first_name'];
+            $campaign->recipient_last_name = $request['recipient_last_name'];
+            $campaign->recipient_business_name = $request['recipient_business_name'];
+            $campaign->legal_recipient_first_name = $request['legal_recipient_first_name'];
+            $campaign->legal_recipient_last_name = $request['legal_recipient_last_name'];
+            $campaign->added_by = $request['added_by'];
+            $campaign->title = $request['title'];
+            $campaign->project = json_encode($request['project']);
+            $campaign->video_1 = $request['video_1'];
+            $campaign->video_2 = $request['video_2'];
+            if (isset($request['video_type'])) {
+                $campaign->video_type = $request['video_type'];
+            } else {
+                $campaign->video_type = 0;
+            }
             $campaign->photo = $campaign_photo_url;
             $campaign->save();
             return redirect('campaigns')->with(['success'=> 'campaigns Added!!']);
@@ -78,7 +95,7 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign)
     {
-        //
+        return view('backend.campaign.show',compact('campaign'));
     }
 
     /**
@@ -109,11 +126,39 @@ class CampaignController extends Controller
                 $campaign_photo_url = 'app/campaign/'.$photo_name;
                 $campaign->photo = $campaign_photo_url;
             }
+
+        $add_photo = array();
+        if($request->file('add_photo')){
+            foreach ($request->file('add_photo') as $key => $value) {
+                $campaign_photo= $value;
+                $photo_name = time().round(1000,9999).'.'.$campaign_photo->getClientOriginalExtension();
+                $campaign_photo->move(storage_path('app/campaign/'), $photo_name);
+                $campaign_photo_url = 'app/campaign/'.$photo_name;
+                $add_photo[] = $campaign_photo_url;
+            }
+            $campaign->add_photo = json_encode($add_photo);   
+        }
+        $campaign->category_id = $request['category_id'];
         $campaign->discription = $request['description'];
         $campaign->status = $request['status'];
+        $campaign->recipient_type = $request['recipient_type'];
+        $campaign->recipient_first_name = $request['recipient_first_name'];
+        $campaign->recipient_last_name = $request['recipient_last_name'];
+        $campaign->recipient_business_name = $request['recipient_business_name'];
+        $campaign->legal_recipient_first_name = $request['legal_recipient_first_name'];
+        $campaign->legal_recipient_last_name = $request['legal_recipient_last_name'];
+        $campaign->added_by = $request['added_by'];
+        $campaign->title = $request['title'];
+        $campaign->project = json_encode($request['project']);
+        $campaign->video_1 = $request['video_1'];
+        $campaign->video_2 = $request['video_2'];
+        if (isset($request['video_type'])) {
+            $campaign->video_type = $request['video_type'];
+        } else {
+            $campaign->video_type = 0;
+        }
         $campaign->save();
         return redirect('campaigns')->with(['success'=> 'campaigns Updated!!']);
-
     }
 
     /**
