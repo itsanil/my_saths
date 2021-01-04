@@ -25,7 +25,76 @@
   <link rel="stylesheet" href="{{ asset('public/adminlte/dist/css/adminlte.min.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  
+ 
+   <style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  /*margin: 8px 0;*/
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+h4 {
+    color: #000;
+    font-size: 13px;
+    font-weight: bold;
+}
+input[type=checkbox], input[type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+}
+.form-horizontal .form-group {
+    border-bottom: 1px solid #f1f1f1;
+    margin-left: -15px;
+    margin-right: -15px;
+    padding: 0 0 16px;
+    margin-bottom: 10px;
+    display: flex;
+}
+.form-horizontal .control-label {
+    font-weight: bold;
+    text-align: right;
+}
+@media (min-width: 1200px)
+.col-lg-8 {
+    width: 66.66666667%;
+}
+
+.form-control-static {
+    margin-bottom: 0;
+}
+p {
+    margin: 0 0 10px;
+}
+.panel{
+    background-color: #fefffe !important;border: 4px solid #191f80 !important;margin-bottom: 20px;
+}
+.panel-body{
+    padding: 12px 8px !important;
+}
+/*div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}*/
+</style>
   <style>
     .page-item.active .page-link {
         z-index: 0;

@@ -13,7 +13,25 @@
 <script>
   $(function () {
     // Summernote
-    $('.textarea').summernote()
+    $('.textarea').summernote();
+        $("#someone_else").css("display", "none");
+        $("#a_business").css("display", "none");
+    $('#option1').on('click',function(){
+        $("#someone_else").css("display", "none");
+        $("#a_business").css("display", "none");
+    });
+    $('#option2').on('click',function(){
+        $("#someone_else").css("display", "block");
+        $("#a_business").css("display", "none");
+    });
+    $('#option3').on('click',function(){
+        $("#someone_else").css("display", "none");
+        $("#a_business").css("display", "block");
+    });
+    $('#option4').on('click',function(){
+        $("#someone_else").css("display", "none");
+        $("#a_business").css("display", "none");
+    });
   })
 
         </script>
@@ -47,26 +65,66 @@
             <div class="card">
               <div class="card-body">
 
-                <form class="pl-3 pr-3" action="{{ route('campaigns.store') }}" method="POST" enctype="multipart/form-data">
+                <form class="pl-3 pr-3 form-horizontal" action="{{ route('campaigns.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                     <div class="card-header">
                         <label for="">Recipient</label>
                     <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
                           <label class="btn bg-olive active">
-                            <input type="radio" name="options" id="option1" autocomplete="off" checked=""> Me
+                            <input type="radio" name="recipient_type" id="option1" autocomplete="off" value="me" checked=""> Me
                           </label>
                           <label class="btn bg-olive">
-                            <input type="radio" name="options" id="option2" autocomplete="off"> Someone Else
+                            <input type="radio" name="recipient_type" id="option2" value="someone_else" autocomplete="off"> Someone Else
                           </label>
                           <label class="btn bg-olive">
-                            <input type="radio" name="options" id="option3" autocomplete="off"> A Business
+                            <input type="radio" name="recipient_type" id="option3" value="a_business" autocomplete="off"> A Business
                           </label>
                           <label class="btn bg-olive">
-                            <input type="radio" name="options" id="option4" autocomplete="off"> A Charity
+                            <input type="radio" name="recipient_type" id="option4" value="a_charity" autocomplete="off"> A Charity
                           </label>
                     </div>
                     
                     </div>
+                    <div id="someone_else" class="recepient_details" style="display: block;">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Recipient's Full Name</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static"><input type="text" class="form-control" name="recipient_first_name" id="recipient_first_name" value=""></p>
+                                <span id="recipient_first_name_err" class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Recipient's Last Name</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static"><input type="text" class="form-control" name="recipient_last_name" id="recipient_last_name" value=""></p>
+                                <span id="recipient_last_name_err" class="help-block"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="a_business" class="recepient_details" >
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Recipient Business Name</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static"><input type="text" class="form-control" name="recipient_business_name" id="recipient_business_name" value=""></p>
+                                <span id="recipient_business_name_err" class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Legal Representative First Name</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static"><input type="text" class="form-control" name="legal_recipient_first_name" id="legal_recipient_first_name" value=""></p>
+                                <span id="legal_recipient_first_name_err" class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Legal Representative Last Name</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static"><input type="text" class="form-control" name="legal_recipient_last_name" id="legal_recipient_last_name" value=""></p>
+                                <span id="legal_recipient_last_name_err" class="help-block"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="added_by" value="{{ Auth::User()->id }}">
                     <div class="card-header">
                         <h4>Full Name: {{ Auth::User()->firstname }} {{ Auth::User()->lastname }}</h4>
                         <h4>Email Address: {{ Auth::User()->email }} </h4>
@@ -138,6 +196,13 @@
                                                     </div>
                                                 </div>
                     </div>
+                    <div class="form-group">
+                        <label for="username">Select Status</label>
+                        <select name="status" class="form-control" required="">
+                            <option value="Active" >Active</option>
+                            <option value="In-Active" >In-Active</option>
+                        </select>
+                    </div>
                     <div class="alert alert-info alert-dismissible">
                       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                       <h5><i class="icon fas fa-info"></i> Alert!</h5>
@@ -183,10 +248,10 @@
                         <div class="col-sm-12">
                             <h4>I have read and agree to the Terms &amp; Conditions.</h4>
                             <div class="checkbox">
-                                <label class="text-justify"><input type="checkbox" class="simple" value="0" name="" id="terms_condition1">I hereby confirm and agree with the company's terms and policies and declare that I have understood all the terms carefully. I also agree that I am creating my own campaign and all the contents, facts, figures, circumstances, rewards and promises that I might have published in my campaign, are the sole responsibility of me myself and company does not have any role to play in that. Content of my campaign cannot be held against the company in any situation whatsoever.</label>
+                                <label class="text-justify"><input type="checkbox" class="simple" required="" name="" id="terms_condition1">I hereby confirm and agree with the company's terms and policies and declare that I have understood all the terms carefully. I also agree that I am creating my own campaign and all the contents, facts, figures, circumstances, rewards and promises that I might have published in my campaign, are the sole responsibility of me myself and company does not have any role to play in that. Content of my campaign cannot be held against the company in any situation whatsoever.</label>
                             </div>
                             <div class="checkbox">
-                                <label class="text-justify"><input type="checkbox" class="simple" value="0" name="" id="terms_condition2">I also agree and understand that OnlineSensor is not any kind of business opportunity and I have signed up on this platform to raise funds for my campaigns/projects and that I have signed up after carefully understanding the entire business model. I clearly understand that there are no investment or returns involved on this platform and I may or may not be able to raise money.</label>
+                                <label class="text-justify"><input type="checkbox" class="simple" required="" name="" id="terms_condition2">I also agree and understand that OnlineSensor is not any kind of business opportunity and I have signed up on this platform to raise funds for my campaigns/projects and that I have signed up after carefully understanding the entire business model. I clearly understand that there are no investment or returns involved on this platform and I may or may not be able to raise money.</label>
                             </div>
                         </div>
                     </div>
