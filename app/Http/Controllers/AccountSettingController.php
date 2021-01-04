@@ -22,9 +22,10 @@ class AccountSettingController extends Controller
 
     public function editProfile(){
         $user_id=\Auth::id();
-         $data = User::findorfail($user_id);
-         // dd($data);
-        return view('backend.account-setting.edit-profile',compact('data'));
+        $user_data = User::findorfail($user_id);
+         $dob=date('d-m-Y',strtotime($user_data->dob));
+         // dd($dob);
+        return view('backend.account-setting.edit-profile',compact('user_data'));
     }
     public function viewProfile(){
         $user_id=\Auth::id();
