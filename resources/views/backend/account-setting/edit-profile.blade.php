@@ -6,6 +6,7 @@
 <!-- DataTables -->
 <link rel="stylesheet" href="{{ asset('public/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('public/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('public/adminlte/css/form-validation.css') }}">
 <style>
     input[type=text], select {
       width: 100%;
@@ -101,6 +102,10 @@ p {
 <script src="{{ asset('public/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('public/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('public/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('public/adminlte/js/jqBootstrapValidation.js') }}"></script>
+<script src="{{ asset('public/adminlte/js/form-validation.js') }}"></script>
+
+
 <script>
     $(function () {
         $("#example1").DataTable({
@@ -203,13 +208,13 @@ p {
                         <div class="form-group">
                             <label class="col-lg-4 col-sm-2 control-label">Your Inviter:</label>
                             <div class="col-lg-8">
-                                <p class="form-control-static">Sambhav</p>
+                                <p class="form-control-static">{{$inviter_data->firstname}} {{$inviter_data->lastname}}</p>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 col-sm-2 control-label">Inviter's Email address:</label>
                             <div class="col-lg-8">
-                                <p class="form-control-static">Sambhavnp@gmail.com</p>
+                                <p class="form-control-static">{{$inviter_data->email}}</p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -839,7 +844,7 @@ p {
                         <label class="col-lg-4 col-sm-2 control-label" for="example-text-input">Mobile No:</label>
                         <div class="col-lg-8">
                             <input name="user[mobile]" class="form-control" type="text" maxlength="10" id="mobile" value="{{$user_data->mobile}}" disabled="disabled">
-                            <span id="errmsg" class="help-block"></span>
+                            <span id="errmsg" class="help-block" ></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -929,12 +934,13 @@ p {
             <div class="form-group">
                 <label class="col-lg-4 col-sm-2 control-label" for="tpin">Security PIN *</label>
                 <div class="col-lg-8">
-                    <input type="password" name="tpin" id="tpin" class="form-control">
-                    <span id="errmsg" class="help-block">(To save changes, you must enter your personal pin here)</span>
+                    <input type="password" name="tpin" id="tpin" class="form-control" required="">
+                    <span id="errmsg" style="color: red;" class="help-block"></span>
+                    <span id="errmsg" style="color: red;">(To save changes, you must enter your personal pin here)</span>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-lg-offset-4 col-lg-8">
+                <div class="col-lg-offset-4 col-lg-8" style="margin-left: 203px;">
                     <button name="update" type="submit" id="update" class="btn btn-success">Save Account Information</button>
                 </div>
             </div>
