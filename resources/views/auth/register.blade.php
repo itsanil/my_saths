@@ -12,16 +12,7 @@
 <script src="{{ asset('public/adminlte/plugins/jquery-validation/jquery.validate.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 <script src="{{ asset('public/adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
-<script type="text/javascript">
-    var route = "{{ url('get-building-name') }}";
-    $('#search').typeahead({
-        source:  function (term, process) {
-        return $.get(route, { term: term }, function (data) {
-                return process(data);
-            });
-        }
-    });
-</script>
+
 <script>
   $('#india_state').hide();
   $('#Div_Pan').hide();

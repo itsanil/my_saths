@@ -22,11 +22,89 @@
 <script src="{{ asset('public/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('public/adminlte/plugins/summernote/summernote-bs4.min.js') }}"></script>
 <script>
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: '{{ route("get_state") }}',
+      data: {
+        'state_code': 'country'
+      },
+      beforeSend: function() {
+        $('.loadingoverlay').css('display', 'block');
+      },
+      success: function(response) {
+        if ((response.success == 1)) {
+          $("#country_name").html(response.data);
+        } 
+      }
+      
+    });
+</script>
+@if(!empty($perk_data))
+<script>
+  $(function () {
+    $('#perk_type').val('{{ $perk_data->perk_type  }}');
+    $('#perk_title').val('{{ $perk_data->perk_title  }}');
+    $('#perk_description').val('{{ $perk_data->perk_description  }}');
+    $('#amount').val('{{ $perk_data->amount  }}');
+    $('#max_perks').val('{{ $perk_data->max_perks  }}');
+    $('#estimated_date').val('{{ $perk_data->estimated_date  }}');
+    $('#perk_description').val('{{ $perk_data->perk_description  }}');
+    $('#country_name').val('{{ json_decode($perk_data->shipping_address)->address  }}');
+    $('#shipping_perk_fees').val('{{ json_decode($perk_data->shipping_address)->fees  }}');
+  })
+</script>
+@endif
+<script>
     $(function () {
         $("#example1").DataTable({
           "responsive": true,
           "autoWidth": false,
         });
+
+        $("#example2").DataTable({
+          "responsive": true,
+          "autoWidth": false,
+        });
+
+    
+
+        $('#shipping_address').hide();
+        $('#vert-tabs-profile-tab').on('click',function(){
+        $('#shipping_address_status').on('change',function(){
+            if($('#shipping_address_status:checked').length == '1'){
+                $('#shipping_address').show();
+            }else{
+                $('#shipping_address').hide();
+            }
+        });
+        });
+
+        $('#shipping_address_status').on('change',function(){
+
+            if($('#shipping_address_status:checked').length == '1'){
+                $('#shipping_address').show();
+            }else{
+                $('#shipping_address').hide();
+            }
+        });
+
+        var perk_html = $('.panel-body').html();
+
+        $('#perk_btn').on('click',function(){
+            if($('#perk_btn').html() == 'Cancel'){
+                $('.panel-body').html('');
+                $('#perk_btn').html('ADD');
+            }else{
+                $('.panel-body').html(perk_html);
+                $('#perk_btn').html('Cancel')
+
+            }
+            
+        });
+
     });
   $(function () {
     // Summernote
@@ -91,8 +169,9 @@
               <div class="col-5 col-sm-3">
                 <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
                   <a class="nav-link active" id="vert-tabs-home-tab" data-toggle="pill" href="#campaign" role="tab" aria-controls="vert-tabs-home" aria-selected="false">Edit/Update Your Campaign</a>
-                  <!-- <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill" href="#campaign-preferences" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">Campaign Preferences</a> -->
+                  <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill" href="#campaign-perk" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">Campaign Perk</a>
                   <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill" href="#campaign-imgs" role="tab" aria-controls="vert-tabs-messages" aria-selected="false"> Campaign Additional Images</a>
+                  <a class="nav-link " id="vert-tabs-settings-tab" data-toggle="pill" href="#campaign-comment" role="tab" aria-controls="vert-tabs-settings" aria-selected="true">Campaign Comment</a>
                   <a class="nav-link " id="vert-tabs-settings-tab" data-toggle="pill" href="#campaign-subscribers" role="tab" aria-controls="vert-tabs-settings" aria-selected="true">Campaign Subscribers</a>
                 </div>
               </div>
@@ -291,10 +370,106 @@
                         </div>
                     </div>
                   </div>
-                  <!-- <div class="tab-pane fade" id="campaign-preferences" role="tabpanel" aria-labelledby="campaign-preferences-tab">
-                     Mauris tincidunt mi at erat gravida, eget tristique urna bibendum. Mauris pharetra purus ut ligula tempor, et vulputate metus facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas sollicitudin, nisi a luctus interdum, nisl ligula placerat mi, quis posuere purus ligula eu lectus. Donec nunc tellus, elementum sit amet ultricies at, posuere nec nunc. Nunc euismod pellentesque diam. 
-                  </div> -->
-                  <div class="tab-pane fade" id="campaign-imgs" role="tabpanel" aria-labelledby="campaign-imgs-tab">
+                  <div class="tab-pane fade" id="campaign-perk" role="tabpanel" aria-labelledby="campaign-perk-tab">
+                    <div class="panel-heading">
+                        @if(empty($perk_data))
+                        <a href="#" id="perk_btn" class="btn btn-danger btn-xs cancel float-right">Cancel</a>
+                        <h4 class="panel-title">Perks Details</h4>
+                        @endif
+                    </div>
+                    <div class="panel-body">
+                        <input type="hidden" class="form-control" name="perk[project_id]" id="project_id" value="{{ $campaign->id }}">
+                        <input type="hidden" class="form-control" name="campaign_perk_id" id="campaign_perk_id" value="">
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-4">Perk Type</label>
+                            <div class="col-sm-8">
+                                <select name="perk[perk_type]" class="form-control" id="perk_type" required="">
+                                    <option value="1">Product</option>
+                                    <option value="2">Service</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-4">Perk Name:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="perk[perk_title]" required="" id="perk_title" value="">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-4">Perk Description:</label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" name="perk[perk_description]" required="" id="perk_description"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-4">Perk Image:</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="file" name="perk[image]"  id="perk_image">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-4">Contribution Amount:</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <span class="input-group-addon">INR</span>
+                                    <input type="number" class="form-control" name="perk[amount]" required="" id="amount" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-4">Number Available</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" name="perk[max_perks]" required="" id="max_perks" value="">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-4">Estimated Delivery Date</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control datepicker" name="perk[estimated_date]" id="estimated_date" value="{{ date('Y-m-d') }}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div id="shipping">
+                            <div class="form-group col-sm-12">
+                                <label class="col-sm-4">Shipping Location</label>
+                                <div class="col-sm-8">
+                                    <input type="checkbox" name="perk[shipping_address_status]" id="shipping_address_status" >
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-12" id="shipping_address">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="col-sm-5">Shipping Address</label>
+                                        <label class="col-sm-5">Shipping Fee</label>
+                                        <label class="col-sm-2"></label>
+                                        <input type="hidden" id="shipping_address_count" value="2">
+                                    </div>
+                                </div>
+                                <div id="addresses" class="well">
+                                    <div id="shipping_address_0" class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <select name="shipping_address[address]" class="form-control valid" id="country_name" >
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" >INR</span>
+                                                    <input type="number" name="shipping_address[fees]" id="shipping_perk_fees" min="0" class="form-control" >
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-sm-12">
+                                    <button type="button" id="add_shipping_address" class="btn btn-xs btn-primary">Add a Location</button>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                <div class="tab-pane fade" id="campaign-imgs" role="tabpanel" aria-labelledby="campaign-imgs-tab">
                     <div class="form-group">
                         <label for="username">Photo 1</label>
                         <input class="form-control" type="file" name="add_photo[]"  >
@@ -315,24 +490,42 @@
                         <label for="username">Photo 5</label>
                         <input class="form-control" type="file" name="add_photo[]"  >
                     </div>
-                  </div>
-                  <div class="tab-pane fade" id="campaign-subscribers" role="tabpanel" aria-labelledby="campaign-subscribers-tab">
-                     <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Sr No</th>
-                            <th>Name</th>
-                            <th>Email Id</th>
-                            <th>Created on</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
-            </div> <!-- end card body-->
-                  </div>
+                </div>
+                <div class="tab-pane fade" id="campaign-comment" role="tabpanel" aria-labelledby="campaign-comment-tab">
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Sr No</th>
+                                    <th>Name</th>
+                                    <th>Email Id</th>
+                                    <th>Comment</th>
+                                    <th>Created on</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div> <!-- end card body-->
+                </div>
+                <div class="tab-pane fade" id="campaign-subscribers" role="tabpanel" aria-labelledby="campaign-subscribers-tab">
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Sr No</th>
+                                    <th>Name</th>
+                                    <th>Email Id</th>
+                                    <th>Created on</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div> <!-- end card body-->
+                </div>
                 </div>
               </div>
             </div>

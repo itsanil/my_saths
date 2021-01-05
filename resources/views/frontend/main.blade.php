@@ -498,7 +498,7 @@ $('.owl-carousel').owlCarousel({
 });
 
 function campaignpage(id){
-    window.location.replace('campaign-view?id='+id);
+    window.location.replace('campaign-list?id='+id);
 }
     </script>
 

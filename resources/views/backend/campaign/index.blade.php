@@ -117,7 +117,7 @@
                                           <i class="fas fa-pencil-alt" >Edit
                                           </i>
                                     </a>
-                                    <a class="btn btn-info btn-sm" href="'.route('campaigns.show',$value->id).'"><i class="fas fa-eye" >Show
+                                    <a class="btn btn-info btn-sm" href="'.url('/campaign-view/'.$value->id).'"><i class="fas fa-eye" >Show
                                           </i></a>
     </td>';
                             echo "</tr>";

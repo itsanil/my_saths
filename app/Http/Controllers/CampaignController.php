@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Campaign;
 use App\CampaignCategory;
+use App\Perk;
 use Illuminate\Http\Request;
 use Validator;
 use Auth;
@@ -21,9 +22,19 @@ class CampaignController extends Controller
         return view('backend.campaign.index',compact('data'));
     }
 
-    public function campaignview(){
-        $data = Campaign::with('campaign')->where('category_id',$_GET['id'])->first();
-        return view('frontend.campaign_view',compact('data'));
+    public function campaignview($id){
+        $campaign = Campaign::findorfail($id);
+        return view('backend.campaign.show',compact('campaign'));
+        // echo "<pre>"; print_r($id); echo "</pre>"; die('end of code');
+        // $data = Campaign::with('campaign')->where('category_id',$_GET['id'])->first();
+        // return view('frontend.campaign_view',compact('data'));
+    }
+
+    public function campaignlist(){
+        $category = CampaignCategory::where('status','Active')->get();
+        $data = Campaign::with('campaign')->where('category_id',$_GET['id'])->get();
+        // echo "<pre>"; print_r($data); echo "</pre>"; die('end of code');
+        return view('frontend.campaign_view',compact('data','category'));
     }
 
     /**
@@ -95,6 +106,7 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign)
     {
+        // echo "<pre>"; print_r($campaign); echo "</pre>"; die('end of code');
         return view('backend.campaign.show',compact('campaign'));
     }
 
@@ -107,7 +119,8 @@ class CampaignController extends Controller
     public function edit(Campaign $campaign)
     {
         $data = CampaignCategory::all();
-        return view('backend.campaign.edit',compact('campaign','data'));
+        $perk_data = Perk::where('campaign_id',$campaign->id)->first();
+        return view('backend.campaign.edit',compact('campaign','data','perk_data'));
     }
 
     /**
@@ -119,6 +132,7 @@ class CampaignController extends Controller
      */
     public function update(Request $request, Campaign $campaign)
     {
+        // echo "<pre>"; print_r(); echo "</pre>"; die('end of code');
         if($request->file('photo')){
                 $campaign_photo= $request->file('photo');
                 $photo_name = time().round(1000,9999).'.'.$campaign_photo->getClientOriginalExtension();
@@ -158,6 +172,33 @@ class CampaignController extends Controller
             $campaign->video_type = 0;
         }
         $campaign->save();
+
+
+        if(isset($request['perk'])){
+            $perk = Perk::where('campaign_id',$campaign->id)->first();
+            if(empty($perk)){
+               $perk = new Perk(); 
+            }
+            if(isset($request->file('perk')['image'])){
+                $perk_photo= $request->file('perk')['image'];
+                $photo_name = time().round(1000,9999).'.'.$perk_photo->getClientOriginalExtension();
+                $perk_photo->move(storage_path('app/perk/'), $photo_name);
+                $perk_photo_url = 'app/perk/'.$photo_name;
+                $perk->perk_photo = $perk_photo_url;
+            }
+
+            $perk->campaign_id = $request['perk']['project_id'];
+            $perk->perk_type = $request['perk']['perk_type'];
+            $perk->perk_title = $request['perk']['perk_title'];
+            $perk->perk_description = $request['perk']['perk_description'];
+            $perk->amount = $request['perk']['amount'];
+            $perk->max_perks = $request['perk']['max_perks'];
+            $perk->estimated_date = $request['perk']['estimated_date'];
+            if(isset($request['shipping_address'])){
+                $perk->shipping_address = json_encode($request['shipping_address']);
+            }
+            $perk->save();
+        }
         return redirect('campaigns')->with(['success'=> 'campaigns Updated!!']);
     }
 
