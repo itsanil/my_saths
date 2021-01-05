@@ -80,6 +80,8 @@ Route::get('/contact',function(){
 
 Route::get('/campaign-view/{id}', 'CampaignController@campaignview')->name('campaign-view');
 
+Route::get('/contribute-now/{id}', 'CampaignController@contributenow')->name('contribute-now');
+
 Route::get('/campaign-list', 'CampaignController@campaignlist')->name('campaign-list');
 
 

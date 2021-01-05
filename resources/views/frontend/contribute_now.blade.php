@@ -163,20 +163,8 @@
                   </div>
                 </div>
                   <p><code>₹ 1,89,33,400 raised</code></p>
-                  @if(isset(Auth::User()->id))
-                            @if(Auth::User()->id == $campaign->added_by)
-                            <!-- can not add comment -->
-                                <a href="#" class="btn btn-primary btn-block disable" onclick="contributenow();" >
-                            @else
-                            <!-- add comment -->
-                                <a href="{{ url('contribute-now') }}/{{ $campaign->id }}" class="btn btn-primary btn-block" >
-                            @endif
 
-                        @else
-                        <!-- redirect to login -->
-                            <a href="{{ url('contribute-now') }}/{{ $campaign->id }}" class="btn btn-primary btn-block" >
-                        @endif
-                  <b>Donate Now</b></a>
+                  <a href="#" class="btn btn-primary btn-block"><b>Donate Now</b></a>
                 <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
@@ -214,6 +202,7 @@
 
     </section>
 </div>
+</body>
 
 <script src="{{ asset('public/adminlte/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap -->
@@ -243,10 +232,6 @@
         setTimeout(function(){
             window.location.href = "{{ url('login') }}";
           }, 2000);
-    }
-
-    function contributenow(){
-        toastr.error('you can not add fund in your campaign');
     }
 </script>
 

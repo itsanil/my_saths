@@ -37,6 +37,11 @@ class CampaignController extends Controller
         return view('frontend.campaign_view',compact('data','category'));
     }
 
+    public function contributenow($id){
+        $campaign = Campaign::findorfail($id);
+        return view('frontend.contribute_now',compact('campaign'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
