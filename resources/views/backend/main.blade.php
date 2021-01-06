@@ -269,7 +269,9 @@ to get the desired effect
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
+
 <script src="{{ asset('public/adminlte/plugins/jquery/jquery.min.js') }}"></script>
+
 <!-- Bootstrap -->
 <script src="{{ asset('public/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 

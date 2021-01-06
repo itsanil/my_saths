@@ -207,7 +207,9 @@ Route::get('/home', 'HomeController@index')->name('home');
           Route::get('/change-security-password', 'AccountSettingController@changeSecurityPassword')->name('change-security-password');
           Route::get('/payout-settings', 'AccountSettingController@payoutSettings')->name('payout-settings');
           Route::get('/show-verification', 'AccountSettingController@showVerification')->name('show-verification');
-        
+          Route::post('/getUserPin', 'AccountSettingController@getUserPin')->name('getUserPin');
+          Route::post('/updateProfile', 'AccountSettingController@updateProfile')->name('updateProfile');
+         
     
 });
 

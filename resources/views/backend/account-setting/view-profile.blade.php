@@ -207,23 +207,23 @@ ul.p-info .title, ul.p-info .desk {
                             <ul class="p-info">
                                 <li>
                                     <div class="title"> Signed Up on</div>
-                                    <div class="desk">01-Aug-2016 02:45:42</div>
+                                    <div class="desk">{{date('d-M-Y H:i:s',strtotime($user_data->created_at))}}</div>
                                 </li>
                                 <li>
                                     <div class="title">Username</div>
-                                    <div class="desk">mishika</div>
+                                    <div class="desk">{{$user_data->username}}</div>
                                 </li>
                                 <li>
                                     <div class="title">Email address</div>
-                                    <div class="desk">kiranyadav831983@gmail.com</div>
+                                    <div class="desk">{{$user_data->email}}</div>
                                 </li>
                                 <li>
                                     <div class="title">You are invited by</div>
-                                    <div class="desk">Sambhav</div>
+                                    <div class="desk">{{$inviter_data->firstname}}  {{$inviter_data->lastname}}</div>
                                 </li>
                                 <li>
                                     <div class="title">Email of your invited person</div>
-                                    <div class="desk">Sambhavnp@gmail.com</div>
+                                    <div class="desk">{{$inviter_data->email}}</div>
                                 </li>
                                 <li>
                                     <div class="title">Promotional URL:</div>
@@ -235,52 +235,52 @@ ul.p-info .title, ul.p-info .desk {
                                                                 </li>-->
                                 <li>
                                     <div class="title">Name</div>
-                                    <div class="desk"> KIRAN   YADAV </div>
+                                    <div class="desk">{{$user_data->firstname }} {{$user_data->lastname}}  </div>
                                 </li>
                                 <li>
                                     <div class="title">My Campaign Category</div>
-                                    <div class="desk"> Organizations</div>
+                                    <div class="desk">{{$user_data->campaign}}</div>
                                 </li>
                                 <li>
                                     <div class="title">Sex</div>
-                                    <div class="desk"> Female</div>
+                                    <div class="desk"> {{$user_data->gender}}</div>
                                 </li>
 
                                 <li>
                                     <div class="title">Address</div>
-                                    <div class="desk">BADLAPUR</div>
+                                    <div class="desk">{{$user_data->address}}</div>
                                 </li>
                                 <li>
                                     <div class="title">City</div>
-                                    <div class="desk">BADLAPUR</div>
+                                    <div class="desk">{{$user_data->city}}</div>
                                 </li>
                                 <li>
                                     <div class="title">District</div>
-                                    <div class="desk">TAHNE</div>
+                                    <div class="desk">{{$user_data->district}}</div>
                                 </li>
                                 <li>
                                     <div class="title">State</div>
-                                    <div class="desk">Maharashtra</div>
+                                    <div class="desk">{{$user_data->state}}</div>
                                 </li>
                                 <li>
                                     <div class="title">Country</div>
-                                    <div class="desk">India</div>
+                                    <div class="desk">{{$user_data->country}}</div>
                                 </li>
                                 <li>
                                     <div class="title">Mobile</div>
-                                    <div class="desk">+91 7410153442</div>
+                                    <div class="desk">+91 {{$user_data->mobile}}</div>
                                 </li>
                                 <li>
                                     <div class="title">Postal Code</div>
-                                    <div class="desk">421503</div>
+                                    <div class="desk">{{$user_data->pinno}}</div>
                                 </li>
                                 <li>
                                     <div class="title">Skype ID</div>
-                                    <div class="desk"></div>
+                                    <div class="desk">{{$user_data->skype_id}}</div>
                                 </li>
                                 <li>
                                     <div class="title">PAN NO</div>
-                                    <div class="desk">AEFPY0133D</div>
+                                    <div class="desk">{{$user_data->pan_no}}</div>
                                 </li>
                             </ul>
                         </div>

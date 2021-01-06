@@ -98,6 +98,7 @@ p {
 @endsection
 @section('js')
 <!-- DataTables -->
+
 <script src="{{ asset('public/adminlte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('public/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('public/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
@@ -106,7 +107,29 @@ p {
 <script src="{{ asset('public/adminlte/js/form-validation.js') }}"></script>
 
 
+
 <script>
+     var my_url="<?php echo url('/') ?>";
+    $(document).on("change paste keyup","#tpin_no",function() {
+    // alert(this.value);
+        var tpin_no = $('#tpin_no').val().trim();
+        if (tpin_no=!'') {
+           $.ajax({
+               type:'POST',
+               url:my_url+'/getUserPin',
+               data:{_token:'<?php echo csrf_token() ?>',tpin_no:$('#tpin_no').val().trim()},
+               dataType:"json",
+               success:function(data) {
+                if (data.status==true) {
+                    $('#tpin_no').parent().parent().removeClass('error');
+                }else{
+                    $('#tpin_no').parent().parent().addClass('error');
+                }
+                
+               }
+            });
+        }
+    });
     $(function () {
         $("#example1").DataTable({
           "responsive": true,
@@ -184,8 +207,11 @@ p {
                         <span id="error_msg"></span>
                         <br>
                     </div>
-                    <form method="post" class="form-horizontal" role="form" id="user_update" autocomplete="off" onsubmit="return false;" novalidate="novalidate">
-                        <input type="hidden" id="district_name" value="TAHNE">
+                    <form method="post" class="form-horizontal" role="form" id="user_update" autocomplete="off" novalidate="novalidate" action="{{ route('updateProfile') }}">
+
+
+   @csrf
+                       
                         
                         <div class="form-group">
                             <label class="col-lg-4 col-sm-2 control-label">Signed up on:</label>
@@ -232,7 +258,7 @@ p {
                         <div class="form-group">
                             <label class="col-lg-4 col-sm-2 control-label" for="example-text-input">Sex:</label>
                             <div class="col-lg-8">
-                                <select name="user[sex]" class="form-control" id="sex" required="">
+                                <select name="user_sex" class="form-control" id="sex">
                                     <option value=""> Select Sex</option>
                                     <option value="Male" {{$user_data->gender=='Male'?'Selected':''}} >Male</option>
                                     <option value="Female" {{$user_data->gender=='Female'?'Selected':''}}  >Female</option>
@@ -260,7 +286,7 @@ p {
                     <div class="form-group">
                         <label class="col-lg-4 col-sm-2 control-label" for="example-text-input">Country:</label>
                         <div class="col-lg-8">
-                            <select name="user[country]" id="country" class="form-control" style="height:40px;" disabled="">
+                            <select name="country" id="country" class="form-control" style="height:40px;" disabled="">
                                 <option value="">Choose Your Country</option>
                                 <option value="1">Afghanistan</option>
                                 <option value="2">Albania</option>
@@ -463,7 +489,7 @@ p {
                     <div class="form-group">
                         <label class="col-lg-4 col-sm-2 control-label" for="state">State:</label>
                         <div class="col-lg-8">
-                            <select name="user[state]" class="form-control" id="state" data-urlval="https://onlinesensor.com/get_district">
+                            <select name="state" class="form-control" id="state" data-urlval="https://onlinesensor.com/get_district">
                                 <option value="">---Select State---</option>
 
                                 <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
@@ -543,7 +569,7 @@ p {
                     <div class="form-group">
                         <label class="col-lg-4 col-sm-2 control-label" for="example-text-input">District:</label>
                         <div class="col-lg-8">
-                            <select required="" id="district" name="user[district]" class="form-control" data-urlval="https://onlinesensor.com/get_city">
+                            <select  id="district" name="district" class="form-control">
                                 <option value="">--Select District--</option>
 
                                 <option value="Ahmednagar">Ahmednagar</option>
@@ -623,7 +649,7 @@ p {
                                 <option value="Yavatmal">Yavatmal</option>
                                 <option value="others">Others</option>
                             </select>
-                            <input type="text" required="" onkeypress="return alpha_checkwithspace(event)" name="district_others" class="form-control" id="district_others" style="display:none;">
+                           
                         </div>
                     </div>
                     <div class="form-group">
@@ -636,7 +662,7 @@ p {
                     <div class="form-group">
                         <label class="col-lg-4 col-sm-2 control-label" for="example-text-input">Postal Code:</label>
                         <div class="col-lg-8">
-                            <input name="user[zipcode]" class="form-control" type="text" id="zipcode" value="{{$user_data->pinno}}">
+                            <input name="pinno" class="form-control" type="text" id="zipcode" value="{{$user_data->pinno}}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -912,20 +938,20 @@ p {
                    <label class="col-lg-4 col-sm-2 control-label" for="skype_id"></label>
                    <div class="col-lg-12">
                     <p>
-                        <input type="checkbox" name="user[anonymous]" id="user[anonymous]" value="1" style="float:left;margin: 6px 2px;" {{$user_data->is_anonymous=='1'?'checked':'' }}><span style="float:left;">Hide my name, comment from everyone and contribute anonymously</span>
+                        <input type="checkbox" name="anonymous" id="anonymous"  style="float:left;margin: 6px 2px;" {{$user_data->is_anonymous=='1'?'checked':'' }}><span style="float:left;">Hide my name, comment from everyone and contribute anonymously</span>
                     </p>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-lg-4 col-sm-2 control-label" for="pan_no">PAN No:</label>
                 <div class="col-lg-8">
-                    <input name="user[pan_no]" class="form-control" type="text" disabled="disabled" id="pan_no" value="{{$user_data->pan_no}}">
+                    <input name="pan_no" class="form-control" type="text" disabled="disabled" id="pan_no" value="{{$user_data->pan_no}}">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-lg-12" style="margin-left: 11px;">
                     <h4 style="font-size: 16px;font-weight: 800;">Reward Based Contributions (Coming Soon)</h4>
-                    <input type="checkbox" class="simple" name="rewards" value="1" id="project_rewards" {{$user_data->is_online_sensor=='1'?'checked':'' }}>
+                    <input type="checkbox" class="simple" name="is_online_sensor"  id="project_rewards" {{$user_data->is_online_sensor=='1'?'checked':'' }}>
                     <span style="font-size: 15px;font-style: italic;">I agree to be a part of the OnlineSensor Reward Fixed Amount Fundraising option and also agree to spend 2/3rd of the funds raised, towards giving rewards to the contributors. I give this right to the company to use 2/3rd of the funds raised by me towards providing rewards to the contributors from any of the third parties associated with the company, as per the terms and policies.</span> 
 
                     <span id="project_rewards_err" class="help-block"></span>
@@ -934,8 +960,8 @@ p {
             <div class="form-group">
                 <label class="col-lg-4 col-sm-2 control-label" for="tpin">Security PIN *</label>
                 <div class="col-lg-8">
-                    <input type="password" name="tpin" id="tpin" class="form-control" required="">
-                    <span id="errmsg" style="color: red;" class="help-block"></span>
+                    <input type="password"  name="security_pin" id="tpin_no"  class="form-control" required="">
+                    <span id="errmsg" style="color: red;" class="help-block" id='pin-error'></span>
                     <span id="errmsg" style="color: red;">(To save changes, you must enter your personal pin here)</span>
                 </div>
             </div>

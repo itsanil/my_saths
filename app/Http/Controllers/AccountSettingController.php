@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\CampaignCategory;
 use App\User;
 use Validator;
+use Response;
+use Redirect;
 
 class AccountSettingController extends Controller
 {
@@ -30,9 +32,10 @@ class AccountSettingController extends Controller
     }
     public function viewProfile(){
         $user_id=\Auth::id();
-         $data = User::findorfail($user_id);
+         $user_data = User::findorfail($user_id);
+         $inviter_data = User::where('inviter_id',$user_data->inviter_id)->first();
          // dd($data);
-        return view('backend.account-setting.view-profile',compact('data'));
+        return view('backend.account-setting.view-profile',compact('user_data','inviter_data'));
     }
     
     public function changePassword(){
@@ -64,6 +67,61 @@ class AccountSettingController extends Controller
          $data = User::findorfail($user_id);
          // dd($data);
         return view('backend.account-setting.show-verification',compact('data'));
+    }
+
+    public function getUserPin(Request $request){
+        // dd($request->tpin_no);
+        $tpin_no=$request->tpin_no;
+        if (!empty($tpin_no)) {
+         $user_id=\Auth::id();
+         $data = User::where(['id'=>$user_id,'security_pin'=>$tpin_no])->first();
+         if (!empty($data)) {
+             $returnArray['status']=true;
+           
+         }else{
+              $returnArray['status']=false;
+         }
+        }
+        echo json_encode($returnArray);
+        
+    }
+
+    public function updateProfile(Request $request){
+        // dd($request->all());
+          $user_id=\Auth::id();
+        $user_sex=$request->user_sex;
+        $dob=$request->dob;
+        $address=$request->address;
+        $state=$request->state;
+        $district=$request->district;
+        $city=$request->city;
+        $pinno=$request->pinno;
+        $skype_id=$request->skype_id;
+        $anonymous=$request->anonymous;
+        $is_online_sensor=$request->is_online_sensor;
+        $security_pin=$request->security_pin;
+
+        $user_check=User::where(['id'=>$user_id,'security_pin'=>$security_pin])->first();
+        if (!empty($user_check)) {
+            $data=array(
+               'gender'=>$user_sex,
+               'dob'=>$dob,
+               'address'=>$address,
+               'state'=>$state,
+               'district'=>$district,
+               'city'=>$city,
+               'pinno'=>$pinno,
+               'skype_id'=>$skype_id,
+               'is_anonymous'=>$anonymous=='on'?1:0,
+               'is_online_sensor'=>$is_online_sensor=='on'?1:0
+            );
+            // dd($data);
+            $update=User::where('id',$user_id)->update($data);
+            return Redirect::back()->withSuccess('Successfully Update Profile');
+        }else{
+              return Redirect::back()->withError('Security Pin not matched!');
+        }
+
     }
 
     

@@ -337,12 +337,13 @@ DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `inviter_id` bigint(20) DEFAULT NULL,
   `firstname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lastname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `username` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `usertype` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `dob` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `gender` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gender` enum('Male','Female','Transgender') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phonecode` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mobile` bigint(20) NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -354,18 +355,24 @@ CREATE TABLE `users` (
   `district` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `pinno` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `panno_aadharno` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pan_no` varbinary(10) DEFAULT NULL,
+  `skype_id` varbinary(255) DEFAULT NULL,
   `campaign` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_anonymous` tinyint(1) DEFAULT 0,
+  `is_online_sensor` tinyint(1) DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`firstname`,`lastname`,`username`,`usertype`,`dob`,`gender`,`phonecode`,`mobile`,`email`,`email_verified_at`,`password`,`security_pin`,`country`,`state`,`district`,`city`,`pinno`,`panno_aadharno`,`campaign`,`remember_token`,`created_at`,`updated_at`) values 
-(1,'anil','LTD.','admin','NONNGO','2021-01-01','Male','+91',8652427021,'admin@gmail.com',NULL,'$2y$10$1C0wdlDsXwo.FJVMY4NQkOjLD6vCkvAHmmz1EgEmN.oSug1SgVJdG','1234','India','Andhra Pradesh','mumbai','Mumbai','400058','806260113622','ADOPTION','bp07B6WuapOQTDjXcpY6iqebQmHTxry1bkeuE4qxs2n64kQB0caymdHcQhJu','2021-01-01 06:07:21','2021-01-01 06:07:21');
+insert  into `users`(`id`,`inviter_id`,`firstname`,`lastname`,`username`,`usertype`,`dob`,`gender`,`phonecode`,`mobile`,`email`,`email_verified_at`,`password`,`security_pin`,`country`,`state`,`district`,`city`,`pinno`,`address`,`panno_aadharno`,`pan_no`,`skype_id`,`campaign`,`remember_token`,`is_anonymous`,`is_online_sensor`,`created_at`,`updated_at`) values 
+(1,3,'anil','LTD.','admin','NONNGO','2021-01-01','Male','+91',8652427021,'admin@gmail.com',NULL,'$2y$10$1C0wdlDsXwo.FJVMY4NQkOjLD6vCkvAHmmz1EgEmN.oSug1SgVJdG','1234','India','Andhra Pradesh','mumbai','Mumbai','400058',NULL,'806260113622',NULL,NULL,'ADOPTION','bp07B6WuapOQTDjXcpY6iqebQmHTxry1bkeuE4qxs2n64kQB0caymdHcQhJu',0,0,'2021-01-01 06:07:21','2021-01-01 06:07:21'),
+(3,1,'Rahul','Gupta','user','NONNGO','2021-01-01','Male','+91',8286206942,'rahul.gpt3101@gmail.com',NULL,'$2y$10$1C0wdlDsXwo.FJVMY4NQkOjLD6vCkvAHmmz1EgEmN.oSug1SgVJdG','1234','India','Andhra Pradesh','mumbai','Mumbai','400058',NULL,'8286206942',NULL,NULL,'ADOPTION','bp07B6WuapOQTDjXcpY6iqebQmHTxry1bkeuE4qxs2n64kQB0caymdHcQhJu',0,0,'2021-01-01 06:07:21','2021-01-01 06:07:21');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
