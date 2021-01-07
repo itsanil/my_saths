@@ -220,6 +220,21 @@ class AccountSettingController extends Controller
 
     }
 
+    public function updateMobileEmail(Request $request){
+        // dd($request->email);
+        $email=$request->email;
+        if (!empty($email)) {
+            $data=array(
+               'email'=>$email,
+            );
+             $user_id=\Auth::id();
+            $update=User::where('id',$user_id)->update($data);
+            return Redirect::back()->withSuccess('Successfully Update Profile');
+        }else{
+            return Redirect::back()->withError('Security Pin not matched!');
+        }
+    }
+
     
     
     

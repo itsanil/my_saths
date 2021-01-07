@@ -213,6 +213,7 @@ Route::get('/home', 'HomeController@index')->name('home');
           Route::post('/updateProfile', 'AccountSettingController@updateProfile')->name('updateProfile');
           Route::post('/updatePassword', 'AccountSettingController@updatepassword')->name('updatePassword');
           Route::post('/updateSecurityPin', 'AccountSettingController@updateSecurityPin')->name('updateSecurityPin');
+          Route::post('/updateMobileEmail', 'AccountSettingController@updateMobileEmail')->name('updateMobileEmail');
          
     
 });
