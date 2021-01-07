@@ -229,9 +229,9 @@ class AccountSettingController extends Controller
             );
              $user_id=\Auth::id();
             $update=User::where('id',$user_id)->update($data);
-            return Redirect::back()->withSuccess('Successfully Update Profile');
+            return Redirect::back()->withSuccess('Successfully Update email');
         }else{
-            return Redirect::back()->withError('Security Pin not matched!');
+            return Redirect::back()->withError('Something Went Wrong!');
         }
     }
 
