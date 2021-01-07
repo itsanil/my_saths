@@ -83,7 +83,62 @@ p {
 <script src="{{ asset('public/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('public/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('public/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('public/adminlte/js/jqBootstrapValidation.js') }}"></script>
+<script src="{{ asset('public/adminlte/js/form-validation.js') }}"></script>
+
 <script>
+   var my_url="<?php echo url('/') ?>";
+  $(document).on("bind change paste keyup keypress","#current_security_pin",function() {
+// console.log('change');
+var current_security_pin=$('#current_security_pin').val().trim();
+if (current_security_pin !='') {
+$.ajax({
+               type:'POST',
+               url:my_url+'/checkUserSecurityPin',
+               data:{_token:'<?php echo csrf_token() ?>',current_security_pin:current_security_pin},
+               dataType:"json",
+               success:function(data) {
+                if (data.status == true) {
+                   $('#current_security_pin_status').text(data.message);
+                       $('#current_security_pin_status').css('color','green');
+                   setTimeout(function(){ 
+                   $('#current_security_pin_status').text('');
+                   $('#current_security_pin_status').css('color','green');
+                     }, 5000);
+                }else{
+                    $('#current_security_pin_status').text(data.message);
+                     $('#current_security_pin_status').css('color','red');
+                   setTimeout(function(){ 
+                   $('#current_security_pin_status').text('');
+                   $('#current_security_pin_status').css('color','red');
+                     }, 50000);
+                }
+               }
+            });
+}
+  });
+
+  $(document).on("bind change paste keyup keypress","#confirm_security_pin,#new_security_pin",function() {
+    var new_security_pin=$('#new_security_pin').val().trim();
+    var confirm_security_pin=$('#confirm_security_pin').val().trim();
+    if (new_security_pin!='' && confirm_security_pin!='') {
+    if (new_security_pin == confirm_security_pin ) {
+      $('#confirm_security_pin_status').text('Security Pin matched');
+      $('#confirm_security_pin_status').css('color','green');
+      setTimeout(function(){
+        $('#confirm_security_pin_status').text('');
+      }, 3000);
+    }else{
+      $('#confirm_security_pin_status').text('Security Pin does not matched');
+      $('#confirm_security_pin_status').css('color','red');
+      setTimeout(function(){
+        $('#confirm_security_pin_status').text('');
+      }, 10000);
+
+    }
+    }
+    
+  });
     $(function () {
         $("#example1").DataTable({
           "responsive": true,
@@ -150,25 +205,26 @@ p {
                 <div class="panel-body">
                     <!-- Basic Form Elements Title -->
                     <!-- END Form Elements Title -->
-                                        <form action="change_ewallet_password" method="post" class="form-horizontal form-bordered" id="changetransactionpassword" autocomplete="off" onsubmit="return false;" novalidate="novalidate">
-                        <input name="userid" class="input_bg userid" type="hidden" id="userid" value="50">
+                      <form action="{{ route('updateSecurityPin') }}" method="post" class="form-horizontal form-bordered" id="changetransactionpassword" autocomplete="off"  novalidate="novalidate">
+                         @csrf
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="tran_oldpassword">Current Security PIN *</label>
                             <div class="col-md-6">
-                                <input type="password" id="tran_oldpassword" name="tran_oldpassword" class="form-control" placeholder="Enter Current Security PIN">
-                                <span class="" id="tran_oldpassword_status"></span>
+                                <input type="password" id="current_security_pin" name="current_security_pin" class="form-control" placeholder="Enter Current Security PIN">
+                                <span class="" id="current_security_pin_status"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="tran_newpassword">New Security PIN *</label>
                             <div class="col-md-6">
-                                <input type="password" id="tran_newpassword" name="tran_newpassword" class="form-control" placeholder="Enter New Security PIN ">
+                                <input type="password" id="new_security_pin" name="new_security_pin" class="form-control" placeholder="Enter New Security PIN ">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="tran_confirmpassword">Retype Security PIN *</label>
                             <div class="col-md-6">
-                                <input type="password" id="tran_confirmpassword" name="tran_confirmpassword" class="form-control" placeholder="Retype new Security PIN">
+                                <input type="password" id="confirm_security_pin" name="confirm_security_pin" class="form-control" placeholder="Retype new Security PIN">
+                                  <span class="" id="confirm_security_pin_status"></span>
                             </div>
                         </div>
                         <div class="form-group form-actions">

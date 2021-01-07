@@ -208,7 +208,11 @@ Route::get('/home', 'HomeController@index')->name('home');
           Route::get('/payout-settings', 'AccountSettingController@payoutSettings')->name('payout-settings');
           Route::get('/show-verification', 'AccountSettingController@showVerification')->name('show-verification');
           Route::post('/getUserPin', 'AccountSettingController@getUserPin')->name('getUserPin');
+          Route::post('/checkUserPassword', 'AccountSettingController@checkUserPassword')->name('checkUserPassword');
+          Route::post('/checkUserSecurityPin', 'AccountSettingController@checkUserSecurityPin')->name('checkUserSecurityPin');
           Route::post('/updateProfile', 'AccountSettingController@updateProfile')->name('updateProfile');
+          Route::post('/updatePassword', 'AccountSettingController@updatepassword')->name('updatePassword');
+          Route::post('/updateSecurityPin', 'AccountSettingController@updateSecurityPin')->name('updateSecurityPin');
          
     
 });

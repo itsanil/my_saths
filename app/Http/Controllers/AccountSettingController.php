@@ -8,6 +8,7 @@ use App\User;
 use Validator;
 use Response;
 use Redirect;
+use Hash;
 
 class AccountSettingController extends Controller
 {
@@ -44,6 +45,101 @@ class AccountSettingController extends Controller
          // dd($data);
         return view('backend.account-setting.change-password',compact('data'));
     }
+
+    public function checkUserPassword(Request $request){
+        // dd($request->all());
+        $oldpassword=$request->oldpassword; 
+        if (!empty($oldpassword)) {
+            $user_id=\Auth::id();
+            $user_data = User::findorfail($user_id);
+            if(!empty($user_data)){
+                $password=$user_data->password;
+                $result=\Hash::check($oldpassword,$password);
+                if($result==true){
+                 $returnArray['status']=true;
+                 $returnArray['message']="Old Password Matched";
+                }else{
+                 $returnArray['status']=false;
+                 $returnArray['message']="Old Password Does Not Matched";
+                }
+            }   
+        }
+
+        echo json_encode($returnArray);
+    }
+
+    public function checkUserSecurityPin(Request $request){
+         $current_security_pin=$request->current_security_pin; 
+        if (!empty($current_security_pin)) {
+            $user_id=\Auth::id();
+            $user_data = User::findorfail($user_id);
+            if(!empty($user_data)){
+                $security_pin=$user_data->security_pin;
+                if($security_pin==$current_security_pin){
+                 $returnArray['status']=true;
+                 $returnArray['message']="Security Pin Matched";
+                }else{
+                 $returnArray['status']=false;
+                 $returnArray['message']="Security Pin Does Not Matched";
+                }
+            }   
+        }
+
+        echo json_encode($returnArray);
+    }
+    
+
+    public function updatepassword(Request $request){
+        // dd($request->all());
+        $user_id=\Auth::id();
+        $oldpassword=$request->oldpassword;
+        $newpassword=$request->newpassword;
+        $confirmpassword=$request->confirmpassword;
+        $user_data = User::findorfail($user_id);
+        $password=$user_data->password;
+        $result=\Hash::check($oldpassword,$password);
+        if($result==true){
+            if ($newpassword == $confirmpassword) {
+                $data=array(
+                   'password'=> Hash::make($confirmpassword),
+                );
+                // dd($data);
+            $update=User::where('id',$user_id)->update($data);
+            return Redirect::back()->withSuccess('Successfully Update Password');
+            }else{
+            return Redirect::back()->withError('New And Confirm Password Does Not Matched!');
+            }
+                 
+        }else{
+            return Redirect::back()->withError('Old Password Does Not Matched!');
+        }
+
+       
+    }
+
+    public function updateSecurityPin(Request $request){
+        // dd($request->all());
+        $current_security_pin=$request->current_security_pin;
+        $new_security_pin=$request->new_security_pin;
+        $confirm_security_pin=$request->confirm_security_pin;
+        $user_id=\Auth::id();
+        $user_data = User::findorfail($user_id);
+        $security_pin=$user_data->security_pin;
+            if ($new_security_pin == $confirm_security_pin) {
+                $data=array(
+                   'security_pin'=>$security_pin,
+                );
+                // dd($data);
+            $update=User::where('id',$user_id)->update($data);
+            return Redirect::back()->withSuccess('Successfully Update Security Pin');
+            }else{
+            return Redirect::back()->withError('New And Confirm Security Pin Does Not Matched!');
+            }
+                 
+       
+    }
+
+
     public function changeMobileEmail(){
         $user_id=\Auth::id();
          $data = User::findorfail($user_id);
