@@ -45,6 +45,14 @@ class AccountSettingController extends Controller
          // dd($data);
         return view('backend.account-setting.change-password',compact('data'));
     }
+    
+    public function updateprofileimage(){
+        $user_id=\Auth::id();
+         $data = User::findorfail($user_id);
+         // dd($data);
+        return view('backend.account-setting.updateprofileimage',compact('data'));
+    }
+    
 
     public function checkUserPassword(Request $request){
         // dd($request->all());

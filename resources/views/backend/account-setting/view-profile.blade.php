@@ -194,7 +194,7 @@ ul.p-info .title, ul.p-info .desk {
                         <div class="panel-body">
                             <div class="profile-pic text-center">
                                 <img alt="" src="https://onlinesensor.com/assets/upload/profile_image/your_image_here@2x.jpg" width="150" height="150"><div class="col-xs-9">
-                                    <i class="fa fa-fw fa-upload"></i> <a href="https://onlinesensor.com/index.php/user/updateprofileimage">Upload Your Photo</a><br><br>
+                                    <i class="fa fa-fw fa-upload"></i> <a href="{{route('updateprofileimage')}}">Upload Your Photo</a><br><br>
                                     <i class="fa fa-fw fa-times"></i> <a href="javascript:void(0)" onclick="removeprofileimage('113079')" class="text-danger">Remove Profile Image</a>
                                 </div>
                             </div>
