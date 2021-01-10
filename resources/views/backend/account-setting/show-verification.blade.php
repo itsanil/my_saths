@@ -157,7 +157,7 @@ p {
                         <tbody>
                           @foreach($document_data as $document)
                           <tr>
-                        <td>{{$document->created_date}} </td>
+                        <td>{{date('d-M-Y H:i:s',strtotime($document->created_at))}} </td>
                         <td>{{$document->proof}} </td>
                         <td>{{$document->document_type}} </td>
                         <td class="text-center"><p><span class="label label-success">{{$document->status==1?"Verified":'Pending'}}</span>                                        </p></td>
