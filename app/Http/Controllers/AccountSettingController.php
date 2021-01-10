@@ -9,6 +9,7 @@ use Validator;
 use Response;
 use Redirect;
 use Hash;
+use File;
 
 class AccountSettingController extends Controller
 {
@@ -45,13 +46,63 @@ class AccountSettingController extends Controller
          // dd($data);
         return view('backend.account-setting.change-password',compact('data'));
     }
-    
+
     public function updateprofileimage(){
         $user_id=\Auth::id();
          $data = User::findorfail($user_id);
          // dd($data);
         return view('backend.account-setting.updateprofileimage',compact('data'));
     }
+
+    public function saveProfileimage(Request $request){
+      // dd($request->file('userprofile'));
+        $user_id=\Auth::id();
+      if($request->file('userprofile')) 
+        {
+            $path = public_path().'/upload/user/profile/'.$user_id;
+            $path_1 = 'public/upload/user/profile/'.$user_id;
+            // dd($path);
+            $user_file=$request->file('userprofile');
+            if (!file_exists($path)) 
+            {
+                File::makeDirectory($path, $mode = 0777, true, true);
+            }
+            $user_file_path = $path.'/'.$user_id.'-'.$request->file('userprofile')->getClientOriginalName();
+            $filename = $user_id.'-'.$user_file->getClientOriginalName();
+            $file_path = $path.'/'.$filename;    
+            $file=$user_file;
+            $user_file->move($path,$filename);
+            $user_file = $path_1.'/'.$user_id.'-'.$request->file('userprofile')->getClientOriginalName();
+            // dd($user_file);
+            $data=array(
+               'profile_image'=>$user_file,
+            );
+            $update=User::where('id',$user_id)->update($data);
+            return Redirect::back()->withSuccess('Successfully Update Profile Image');
+            }else{
+            return Redirect::back()->withError('Please Select File');
+            }
+                 
+
+        
+    }
+
+    public function deleteProfileimage(Request $request) {
+        $user_id=\Auth::id();
+        $data = User::findorfail($user_id);
+        $image_path = app_path($data->profile_image);
+        if (File::exists($image_path)) {
+        //File::delete($image_path);
+        unlink($image_path);
+        }
+        $data=array(
+           'profile_image'=>null,
+        );
+        $update=User::where('id',$user_id)->update($data);
+        return Redirect::back()->withSuccess('Successfully Update Profile Image');
+    }
+
+
     
 
     public function checkUserPassword(Request $request){

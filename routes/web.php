@@ -215,6 +215,8 @@ Route::get('/home', 'HomeController@index')->name('home');
           Route::post('/updatePassword', 'AccountSettingController@updatepassword')->name('updatePassword');
           Route::post('/updateSecurityPin', 'AccountSettingController@updateSecurityPin')->name('updateSecurityPin');
           Route::post('/updateMobileEmail', 'AccountSettingController@updateMobileEmail')->name('updateMobileEmail');
+          Route::post('/saveProfileimage', 'AccountSettingController@saveProfileimage')->name('saveProfileimage');
+          Route::post('/deleteProfileimage', 'AccountSettingController@deleteProfileimage')->name('deleteProfileimage');
          
     
 });

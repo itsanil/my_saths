@@ -204,33 +204,45 @@ input[type=file] {
                 <div class="col-md-12">
                     <div class="panel">
                         <div class="panel-body">
-                                                        <form method="post" class="form-horizontal form-bordered" id="profile_image_update" action="https://onlinesensor.com/index.php/user/profileimage_save" autocomplete="off" enctype="multipart/form-data">
+                                    <form action="{{ route('saveProfileimage') }}" method="post" class="form-horizontal form-bordered" id="profile_image_update" autocomplete="off"  novalidate="novalidate"  enctype="multipart/form-data">
+                            @csrf
                                                   <div class="form-group">
                                 <label class="col-sm-3 control-label">Upload Profile Image<span class="danger" style="color:red;">*</span></label>
                                 <div class="col-sm-9">
-                                    <div id="image-holder" class="fileupload-new img-thumbnail" style="width:108px; height:85px;" data-original="https://onlinesensor.com/assets/upload/profile_image/your_image_here.jpg">
-                                        <img id="image_upload_show1" src="https://onlinesensor.com/assets/upload/profile_image/your_image_here@2x.jpg" width="98" height="75">
+                                    <div id="image-holder" class="fileupload-new img-thumbnail" style="width:108px; height:85px;" data-original="{{asset('adminlte/img/your_image_here.jpg')}}">
+                                        @if(!empty($data->profile_image))
+                                        <img id="image_upload_show1" src="{{asset($data->profile_image)}}" width="98" height="75">
+                                        @else
+                                        <img id="image_upload_show1" src="{{asset('public/adminlte/img/your_image_here@2x.jpg')}}" width="98" height="75">
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="pull-right col-sm-9 fileupload fileupload-new" data-provides="fileupload">
-                                    <div class="input-append" style="margin-left: -462px;margin-top: 91px;">
+                                   <!--  <div class="input-append" style="margin-left: -462px;margin-top: 91px;">
                                         <div class="uneditable-input" style="display: none;">  <i class="glyphicon glyphicon-file fileupload-exists"></i> <span class="fileupload-preview"></span> </div>
                                         <span class="btn btn-default btn-file"> <span class="fileupload-new">Select file</span>
                                             <input type="file" name="profile_imagecropper" id="profile_imagecropper" class="form-control" data-url="https://onlinesensor.com/user/tempimg_upload">
                                             <input type="hidden" name="profile_image_name" id="profile_image_name" value="" class="form-control">
+                                            <input type="file" id="exampleInputFile">
+
                                         </span>
                                         <a href="#" class="red fileupload-exists" data-dismiss="fileupload">Remove</a>
                                         <div>File Format(*.gif, .jpg, .jpeg, *.png)</div>
 
-                                    </div>
+                                    </div> -->
+                                <div class="form-group" style="margin-left: -462px;margin-top: 91px;display: block;">
+                                <input type="file" id="exampleInputFile" name="userprofile"  accept="image/x-png,image/gif,image/jpeg" >
+
+                                <p class="help-block">Example block-level help text here.</p>
+                                </div>
                                 </div>
                             </div>
                             <!-- profile image upload -->
                                 
                                 <div class="form-group form-actions">
-                                    <div class="col-md-9 col-md-offset-3">
-                                        <button name="Send" type="submit" class="btn btn-sm btn-primary" id="update_profile_image" disabled="disabled"><i class="fa fa-angle-right"></i><span>Update</span></button>
-                                        <a href="https://onlinesensor.com/index.php/user/view_profile" class="btn btn-sm btn-primary">Back</a>
+                                    <div class="col-md-9 col-md-offset-3" style="margin-left: 154px;">
+                                        <button name="Send" type="submit" class="btn btn-sm btn-primary" id="update_profile_image"><i class="fa fa-angle-right"></i><span>Update</span></button>
+                                        <a href="{{route('view-profile')}}" class="btn btn-sm btn-primary">Back</a>
                                     </div>
                                 </div>
                             </form>

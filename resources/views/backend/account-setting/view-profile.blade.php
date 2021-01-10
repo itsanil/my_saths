@@ -128,6 +128,10 @@ ul.p-info .title, ul.p-info .desk {
 <script src="{{ asset('public/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('public/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
 <script>
+    $('#remove_profile_image').click(function(e) {
+        e.preventDefault();
+        $("#remove_profile_image_update").submit();
+    });
     $(function () {
         $("#example1").DataTable({
           "responsive": true,
@@ -193,9 +197,19 @@ ul.p-info .title, ul.p-info .desk {
                     <div class="panel">
                         <div class="panel-body">
                             <div class="profile-pic text-center">
-                                <img alt="" src="https://onlinesensor.com/assets/upload/profile_image/your_image_here@2x.jpg" width="150" height="150"><div class="col-xs-9">
+                                 @if(!empty($user_data->profile_image))
+                                        <img id="image_upload_show1" src="{{asset($user_data->profile_image)}}" width="150" height="150">
+                                        @else
+                                        <img id="image_upload_show1" src="{{asset('public/adminlte/img/your_image_here@2x.jpg')}}" width="150" height="150">
+                                        @endif
+                                <div class="col-xs-9">
+                                    <form action="{{ route('deleteProfileimage') }}" method="post" class="form-horizontal form-bordered" id="remove_profile_image_update" autocomplete="off"  novalidate="novalidate"  enctype="multipart/form-data">
+                                    @csrf
                                     <i class="fa fa-fw fa-upload"></i> <a href="{{route('updateprofileimage')}}">Upload Your Photo</a><br><br>
-                                    <i class="fa fa-fw fa-times"></i> <a href="javascript:void(0)" onclick="removeprofileimage('113079')" class="text-danger">Remove Profile Image</a>
+                                    <i class="fa fa-fw fa-times"></i> 
+                                     
+                                    <a  href="javascript:void(0)" type="submit" id="remove_profile_image" class="text-danger">Remove Profile Image</a>
+                                </form>
                                 </div>
                             </div>
                         </div>
