@@ -92,9 +92,10 @@ class AccountSettingController extends Controller
         $user_id=\Auth::id();
         $data = User::findorfail($user_id);
         $image_path = app_path($data->profile_image);
-        if (File::exists($image_path)) {
+        // dd($image_path);
+        if (File::exists($data->profile_image)) {
         //File::delete($image_path);
-        unlink($image_path);
+        unlink($data->profile_image);
         }
         $data=array(
            'profile_image'=>null,
