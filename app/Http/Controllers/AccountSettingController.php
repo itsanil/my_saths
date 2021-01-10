@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\CampaignCategory;
 use App\User;
+use App\Userdocument;
 use Validator;
 use Response;
 use Redirect;
@@ -99,7 +100,7 @@ class AccountSettingController extends Controller
            'profile_image'=>null,
         );
         $update=User::where('id',$user_id)->update($data);
-        return Redirect::back()->withSuccess('Successfully Update Profile Image');
+        return Redirect::back()->withSuccess('Successfully Remove Profile');
     }
 
 
@@ -220,8 +221,9 @@ class AccountSettingController extends Controller
     public function showVerification(){
         $user_id=\Auth::id();
          $data = User::findorfail($user_id);
-         // dd($data);
-        return view('backend.account-setting.show-verification',compact('data'));
+         $document_data = Userdocument::where('user_id',$data->id)->get();
+         // dd($document->document_type);
+        return view('backend.account-setting.show-verification',compact('data','document_data'));
     }
 
     public function getUserPin(Request $request){
