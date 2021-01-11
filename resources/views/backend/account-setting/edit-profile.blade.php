@@ -98,6 +98,7 @@ p {
 @endsection
 @section('js')
 <!-- DataTables -->
+
 <script src="{{ asset('public/adminlte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('public/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('public/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
@@ -106,7 +107,29 @@ p {
 <script src="{{ asset('public/adminlte/js/form-validation.js') }}"></script>
 
 
+
 <script>
+     var my_url="<?php echo url('/') ?>";
+    $(document).on("change paste keyup","#tpin_no",function() {
+    // alert(this.value);
+        var tpin_no = $('#tpin_no').val().trim();
+        if (tpin_no=!'') {
+           $.ajax({
+               type:'POST',
+               url:my_url+'/getUserPin',
+               data:{_token:'<?php echo csrf_token() ?>',tpin_no:$('#tpin_no').val().trim()},
+               dataType:"json",
+               success:function(data) {
+                if (data.status==true) {
+                    $('#tpin_no').parent().parent().removeClass('error');
+                }else{
+                    $('#tpin_no').parent().parent().addClass('error');
+                }
+                
+               }
+            });
+        }
+    });
     $(function () {
         $("#example1").DataTable({
           "responsive": true,
@@ -184,8 +207,11 @@ p {
                         <span id="error_msg"></span>
                         <br>
                     </div>
-                    <form method="post" class="form-horizontal" role="form" id="user_update" autocomplete="off" onsubmit="return false;" novalidate="novalidate">
-                        <input type="hidden" id="district_name" value="TAHNE">
+                    <form method="post" class="form-horizontal" role="form" id="user_update" autocomplete="off" novalidate="novalidate" action="{{ route('updateProfile') }}">
+
+
+   @csrf
+
                         
                         <div class="form-group">
                             <label class="col-lg-4 col-sm-2 control-label">Signed up on:</label>
@@ -232,7 +258,7 @@ p {
                         <div class="form-group">
                             <label class="col-lg-4 col-sm-2 control-label" for="example-text-input">Sex:</label>
                             <div class="col-lg-8">
-                                <select name="user[sex]" class="form-control" id="sex" required="">
+                                <select name="user_sex" class="form-control" id="sex">
                                     <option value=""> Select Sex</option>
                                     <option value="Male" {{$user_data->gender=='Male'?'Selected':''}} >Male</option>
                                     <option value="Female" {{$user_data->gender=='Female'?'Selected':''}}  >Female</option>
@@ -260,7 +286,7 @@ p {
                     <div class="form-group">
                         <label class="col-lg-4 col-sm-2 control-label" for="example-text-input">Country:</label>
                         <div class="col-lg-8">
-                            <select name="user[country]" id="country" class="form-control" style="height:40px;" disabled="">
+                            <select name="country" id="country" class="form-control" style="height:40px;" disabled="">
                                 <option value="">Choose Your Country</option>
                                 <option value="1">Afghanistan</option>
                                 <option value="2">Albania</option>
@@ -463,167 +489,167 @@ p {
                     <div class="form-group">
                         <label class="col-lg-4 col-sm-2 control-label" for="state">State:</label>
                         <div class="col-lg-8">
-                            <select name="user[state]" class="form-control" id="state" data-urlval="https://onlinesensor.com/get_district">
+                            <select name="state" class="form-control" id="state" data-urlval="https://onlinesensor.com/get_district">
                                 <option value="">---Select State---</option>
 
-                                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                <option value="Andaman and Nicobar Islands" {{$user_data->state=='Andaman and Nicobar Islands'?'selected':''}}>Andaman and Nicobar Islands</option>
 
-                                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                <option value="Andhra Pradesh" {{$user_data->state=='Andhra Pradesh'?'selected':''}}>Andhra Pradesh</option>
 
-                                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                <option value="Arunachal Pradesh" {{$user_data->state=='Arunachal Pradesh'?'selected':''}}>Arunachal Pradesh</option>
 
-                                <option value="Assam">Assam</option>
+                                <option value="Assam" {{$user_data->state=='Assam'?'selected':''}}>Assam</option>
 
-                                <option value="Bihar">Bihar</option>
+                                <option value="Bihar" {{$user_data->state=='Bihar'?'selected':''}}>Bihar</option>
 
-                                <option value="Chandigarh">Chandigarh</option>
+                                <option value="Chandigarh" {{$user_data->state=='Chandigarh'?'selected':''}}>Chandigarh</option>
 
-                                <option value="Chhatisgarh">Chhatisgarh</option>
+                                <option value="Chhatisgarh" {{$user_data->state=='Chhatisgarh'?'selected':''}}>Chhatisgarh</option>
 
-                                <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+                                <option value="Dadra and Nagar Haveli" {{$user_data->state=='Dadra and Nagar Haveli'?'selected':''}}>Dadra and Nagar Haveli</option>
 
-                                <option value="Daman and Diu">Daman and Diu</option>
+                                <option value="Daman and Diu" {{$user_data->state=='Daman and Diu'?'selected':''}}>Daman and Diu</option>
 
-                                <option value="Delhi">Delhi</option>
+                                <option value="Delhi" {{$user_data->state=='Delhi'?'selected':''}}>Delhi</option>
 
-                                <option value="Goa">Goa</option>
+                                <option value="Goa" {{$user_data->state=='Goa'?'selected':''}}>Goa</option>
 
-                                <option value="Gujarat">Gujarat</option>
+                                <option value="Gujarat" {{$user_data->state=='Gujarat'?'selected':''}}>Gujarat</option>
 
-                                <option value="Haryana">Haryana</option>
+                                <option value="Haryana" {{$user_data->state=='Haryana'?'selected':''}}>Haryana</option>
 
-                                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                <option value="Himachal Pradesh" {{$user_data->state=='Himachal Pradesh'?'selected':''}}>Himachal Pradesh</option>
 
-                                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                <option value="Jammu and Kashmir" {{$user_data->state=='Jammu and Kashmir'?'selected':''}}>Jammu and Kashmir</option>
 
-                                <option value="Jharkhand">Jharkhand</option>
+                                <option value="Jharkhand" {{$user_data->state=='Jharkhand'?'selected':''}}>Jharkhand</option>
 
-                                <option value="Karnataka">Karnataka</option>
+                                <option value="Karnataka" {{$user_data->state=='Karnataka'?'selected':''}}>Karnataka</option>
 
-                                <option value="Kerala">Kerala</option>
+                                <option value="Kerala" {{$user_data->state=='Kerala'?'selected':''}}>Kerala</option>
 
-                                <option value="Lakshadweep">Lakshadweep</option>
+                                <option value="Lakshadweep" {{$user_data->state=='Lakshadweep'?'selected':''}}>Lakshadweep</option>
 
-                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                <option value="Madhya Pradesh" {{$user_data->state=='Madhya Pradesh'?'selected':''}}>Madhya Pradesh</option>
 
-                                <option value="Maharashtra" selected="selected">Maharashtra</option>
+                                <option value="Maharashtra" {{$user_data->state=='Maharashtra'?'selected':''}}>Maharashtra</option>
 
-                                <option value="Manipur">Manipur</option>
+                                <option value="Manipur" {{$user_data->state=='Manipur'?'selected':''}}>Manipur</option>
 
-                                <option value="Meghalaya">Meghalaya</option>
+                                <option value="Meghalaya" {{$user_data->state=='Meghalaya'?'selected':''}}>Meghalaya</option>
 
-                                <option value="Mizoram">Mizoram</option>
+                                <option value="Mizoram" {{$user_data->state=='Mizoram'?'selected':''}}>Mizoram</option>
 
-                                <option value="Nagaland">Nagaland</option>
+                                <option value="Nagaland" {{$user_data->state=='Nagaland'?'selected':''}}>Nagaland</option>
 
-                                <option value="Odisha">Odisha</option>
+                                <option value="Odisha" {{$user_data->state=='Odisha'?'selected':''}}>Odisha</option>
 
-                                <option value="Puducherry">Puducherry</option>
+                                <option value="Puducherry" {{$user_data->state=='Puducherry'?'selected':''}}>Puducherry</option>
 
-                                <option value="Punjab">Punjab</option>
+                                <option value="Punjab" {{$user_data->state=='Punjab'?'selected':''}}>Punjab</option>
 
-                                <option value="Rajasthan">Rajasthan</option>
+                                <option value="Rajasthan" {{$user_data->state=='Rajasthan'?'selected':''}}>Rajasthan</option>
 
-                                <option value="Sikkim">Sikkim</option>
+                                <option value="Sikkim" {{$user_data->state=='Sikkim'?'selected':''}}>Sikkim</option>
 
-                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                <option value="Tamil Nadu" {{$user_data->state=='Tamil Nadu'?'selected':''}}>Tamil Nadu</option>
 
-                                <option value="Telangana">Telangana</option>
+                                <option value="Telangana" {{$user_data->state=='Telangana'?'selected':''}}>Telangana</option>
 
-                                <option value="Tripura">Tripura</option>
+                                <option value="Tripura" {{$user_data->state=='Tripura'?'selected':''}}>Tripura</option>
 
-                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                <option value="Uttar Pradesh" {{$user_data->state=='Uttar Pradesh'?'selected':''}}>Uttar Pradesh</option>
 
-                                <option value="Uttarakhand">Uttarakhand</option>
+                                <option value="Uttarakhand" {{$user_data->state=='Uttarakhand'?'selected':''}}>Uttarakhand</option>
 
-                                <option value="West Bengal">West Bengal</option>
+                                <option value="West Bengal" {{$user_data->state=='West Bengal'?'selected':''}}>West Bengal</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-4 col-sm-2 control-label" for="example-text-input">District:</label>
                         <div class="col-lg-8">
-                            <select required="" id="district" name="user[district]" class="form-control" data-urlval="https://onlinesensor.com/get_city">
+                            <select  id="district" name="district" class="form-control">
                                 <option value="">--Select District--</option>
 
-                                <option value="Ahmednagar">Ahmednagar</option>
+                                <option value="Ahmednagar" {{$user_data->district=='Ahmednagar'?'selected':''}}>Ahmednagar</option>
 
-                                <option value="Akola">Akola</option>
+                                <option value="Akola" {{$user_data->district=='Akola'?'selected':''}}>Akola</option>
 
-                                <option value="Amravati">Amravati</option>
+                                <option value="Amravati" {{$user_data->district=='Amravati'?'selected':''}}>Amravati</option>
 
-                                <option value="AMRAVTI">AMRAVTI</option>
+                                <option value="AMRAVTI" {{$user_data->district=='AMRAVTI'?'selected':''}}>AMRAVTI</option>
 
-                                <option value="Aurangabad">Aurangabad</option>
+                                <option value="Aurangabad" {{$user_data->district=='Aurangabad'?'selected':''}}>Aurangabad</option>
 
-                                <option value="Beed">Beed</option>
+                                <option value="Beed" {{$user_data->district=='Beed'?'selected':''}}>Beed</option>
 
-                                <option value="Bhandara">Bhandara</option>
+                                <option value="Bhandara" {{$user_data->district=='Bhandara'?'selected':''}}>Bhandara</option>
 
-                                <option value="Buldhana">Buldhana</option>
+                                <option value="Buldhana" {{$user_data->district=='Buldhana'?'selected':''}}>Buldhana</option>
 
-                                <option value="Chandrapur">Chandrapur</option>
+                                <option value="Chandrapur" {{$user_data->district=='Chandrapur'?'selected':''}}>Chandrapur</option>
 
-                                <option value="Dhule">Dhule</option>
+                                <option value="Dhule" {{$user_data->district=='Dhule'?'selected':''}}>Dhule</option>
 
-                                <option value="Gadchiroli">Gadchiroli</option>
+                                <option value="Gadchiroli" {{$user_data->district=='Gadchiroli'?'selected':''}}>Gadchiroli</option>
 
-                                <option value="Gondia">Gondia</option>
+                                <option value="Gondia" {{$user_data->district=='Gondia'?'selected':''}}>Gondia</option>
 
-                                <option value="Hingoli">Hingoli</option>
+                                <option value="Hingoli" {{$user_data->district=='Hingoli'?'selected':''}}>Hingoli</option>
 
-                                <option value="Jalgaon">Jalgaon</option>
+                                <option value="Jalgaon" {{$user_data->district=='Jalgaon'?'selected':''}}>Jalgaon</option>
 
-                                <option value="Jalna">Jalna</option>
+                                <option value="Jalna" {{$user_data->district=='Jalna'?'selected':''}}>Jalna</option>
 
-                                <option value="Kolhapur">Kolhapur</option>
+                                <option value="Kolhapur" {{$user_data->district=='Kolhapur'?'selected':''}}>Kolhapur</option>
 
-                                <option value="Latur">Latur</option>
+                                <option value="Latur" {{$user_data->district=='Latur'?'selected':''}}>Latur</option>
 
-                                <option value="MUMBAI">MUMBAI</option>
+                                <option value="MUMBAI" {{$user_data->district=='MUMBAI'?'selected':''}}>MUMBAI</option>
 
-                                <option value="Mumbai City">Mumbai City</option>
+                                <option value="Mumbai City" {{$user_data->district=='Mumbai City'?'selected':''}}>Mumbai City</option>
 
-                                <option value="Mumbai Suburban">Mumbai Suburban</option>
+                                <option value="Mumbai Suburban" {{$user_data->district=='Mumbai Suburban'?'selected':''}}>Mumbai Suburban</option>
 
-                                <option value="Nagpur">Nagpur</option>
+                                <option value="Nagpur" {{$user_data->district=='Nagpur'?'selected':''}}>Nagpur</option>
 
-                                <option value="Nanded">Nanded</option>
+                                <option value="Nanded" {{$user_data->district=='Nanded'?'selected':''}}>Nanded</option>
 
-                                <option value="Nandurbar">Nandurbar</option>
+                                <option value="Nandurbar" {{$user_data->district=='Nandurbar'?'selected':''}}>Nandurbar</option>
 
-                                <option value="Nashik">Nashik</option>
+                                <option value="Nashik" {{$user_data->district=='Nashik'?'selected':''}}>Nashik</option>
 
-                                <option value="Osmanabad">Osmanabad</option>
+                                <option value="Osmanabad" {{$user_data->district=='Osmanabad'?'selected':''}}>Osmanabad</option>
 
-                                <option value="Palghar">Palghar</option>
+                                <option value="Palghar" {{$user_data->district=='Palghar'?'selected':''}}>Palghar</option>
 
-                                <option value="Parbhani">Parbhani</option>
+                                <option value="Parbhani" {{$user_data->district=='Parbhani'?'selected':''}}>Parbhani</option>
 
-                                <option value="Pune">Pune</option>
+                                <option value="Pune" {{$user_data->district=='Pune'?'selected':''}}>Pune</option>
 
-                                <option value="Raigad">Raigad</option>
+                                <option value="Raigad" {{$user_data->district=='Raigad'?'selected':''}}>Raigad</option>
 
-                                <option value="Ratnagiri">Ratnagiri</option>
+                                <option value="Ratnagiri" {{$user_data->district=='Ratnagiri'?'selected':''}}>Ratnagiri</option>
 
-                                <option value="Sangli">Sangli</option>
+                                <option value="Sangli" {{$user_data->district=='Sangli'?'selected':''}}>Sangli</option>
 
-                                <option value="Satara">Satara</option>
+                                <option value="Satara" {{$user_data->district=='Satara'?'selected':''}}>Satara</option>
 
-                                <option value="Sindhudurg">Sindhudurg</option>
+                                <option value="Sindhudurg" {{$user_data->district=='Sindhudurg'?'selected':''}}>Sindhudurg</option>
 
-                                <option value="Solapur">Solapur</option>
+                                <option value="Solapur" {{$user_data->district=='Solapur'?'selected':''}}>Solapur</option>
 
-                                <option value="Thane">Thane</option>
+                                <option value="Thane" {{$user_data->district=='Thane'?'selected':''}}>Thane</option>
 
-                                <option value="Wardha">Wardha</option>
+                                <option value="Wardha" {{$user_data->district=='Wardha'?'selected':''}}>Wardha</option>
 
-                                <option value="Washim">Washim</option>
+                                <option value="Washim" {{$user_data->district=='Washim'?'selected':''}}>Washim</option>
 
-                                <option value="Yavatmal">Yavatmal</option>
-                                <option value="others">Others</option>
+                                <option value="Yavatmal" {{$user_data->district=='Yavatmal'?'selected':''}}>Yavatmal</option>
+                                <option value="others" {{$user_data->district=='others'?'selected':''}}>Others</option>
                             </select>
-                            <input type="text" required="" onkeypress="return alpha_checkwithspace(event)" name="district_others" class="form-control" id="district_others" style="display:none;">
+                           
                         </div>
                     </div>
                     <div class="form-group">
@@ -636,7 +662,7 @@ p {
                     <div class="form-group">
                         <label class="col-lg-4 col-sm-2 control-label" for="example-text-input">Postal Code:</label>
                         <div class="col-lg-8">
-                            <input name="user[zipcode]" class="form-control" type="text" id="zipcode" value="{{$user_data->pinno}}">
+                            <input name="pinno" class="form-control" type="text" id="zipcode" value="{{$user_data->pinno}}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -912,20 +938,20 @@ p {
                    <label class="col-lg-4 col-sm-2 control-label" for="skype_id"></label>
                    <div class="col-lg-12">
                     <p>
-                        <input type="checkbox" name="user[anonymous]" id="user[anonymous]" value="1" style="float:left;margin: 6px 2px;" {{$user_data->is_anonymous=='1'?'checked':'' }}><span style="float:left;">Hide my name, comment from everyone and contribute anonymously</span>
+                        <input type="checkbox" name="anonymous" id="anonymous"  style="float:left;margin: 6px 2px;" {{$user_data->is_anonymous=='1'?'checked':'' }}><span style="float:left;">Hide my name, comment from everyone and contribute anonymously</span>
                     </p>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-lg-4 col-sm-2 control-label" for="pan_no">PAN No:</label>
                 <div class="col-lg-8">
-                    <input name="user[pan_no]" class="form-control" type="text" disabled="disabled" id="pan_no" value="{{$user_data->pan_no}}">
+                    <input name="pan_no" class="form-control" type="text" disabled="disabled" id="pan_no" value="{{$user_data->pan_no}}">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-lg-12" style="margin-left: 11px;">
                     <h4 style="font-size: 16px;font-weight: 800;">Reward Based Contributions (Coming Soon)</h4>
-                    <input type="checkbox" class="simple" name="rewards" value="1" id="project_rewards" {{$user_data->is_online_sensor=='1'?'checked':'' }}>
+                    <input type="checkbox" class="simple" name="is_online_sensor"  id="project_rewards" {{$user_data->is_online_sensor=='1'?'checked':'' }}>
                     <span style="font-size: 15px;font-style: italic;">I agree to be a part of the OnlineSensor Reward Fixed Amount Fundraising option and also agree to spend 2/3rd of the funds raised, towards giving rewards to the contributors. I give this right to the company to use 2/3rd of the funds raised by me towards providing rewards to the contributors from any of the third parties associated with the company, as per the terms and policies.</span> 
 
                     <span id="project_rewards_err" class="help-block"></span>
@@ -934,8 +960,8 @@ p {
             <div class="form-group">
                 <label class="col-lg-4 col-sm-2 control-label" for="tpin">Security PIN *</label>
                 <div class="col-lg-8">
-                    <input type="password" name="tpin" id="tpin" class="form-control" required="">
-                    <span id="errmsg" style="color: red;" class="help-block"></span>
+                    <input type="password"  name="security_pin" id="tpin_no"  class="form-control" required="">
+                    <span id="errmsg" style="color: red;" class="help-block" id='pin-error'></span>
                     <span id="errmsg" style="color: red;">(To save changes, you must enter your personal pin here)</span>
                 </div>
             </div>

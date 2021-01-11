@@ -69,6 +69,7 @@ p {
 .panel-body{
     padding: 12px 8px !important;
 }
+
 /*div {
   border-radius: 5px;
   background-color: #f2f2f2;
@@ -83,7 +84,64 @@ p {
 <script src="{{ asset('public/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('public/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('public/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('public/adminlte/js/jqBootstrapValidation.js') }}"></script>
+<script src="{{ asset('public/adminlte/js/form-validation.js') }}"></script>
+
 <script>
+   var my_url="<?php echo url('/') ?>";
+  $(document).on("bind change paste keyup keypress","#oldpassword",function() {
+// console.log('change');
+var oldpassword=$('#oldpassword').val().trim();
+if (oldpassword !='') {
+$.ajax({
+               type:'POST',
+               url:my_url+'/checkUserPassword',
+               data:{_token:'<?php echo csrf_token() ?>',oldpassword:oldpassword},
+               dataType:"json",
+               success:function(data) {
+                if (data.status == true) {
+                   $('#oldpassword_status').text(data.message);
+                       $('#oldpassword_status').css('color','green');
+                   setTimeout(function(){ 
+                   $('#oldpassword_status').text('');
+                   $('#oldpassword_status').css('color','green');
+                     }, 5000);
+                }else{
+                    $('#oldpassword_status').text(data.message);
+                     $('#oldpassword_status').css('color','red');
+                   setTimeout(function(){ 
+                   $('#oldpassword_status').text('');
+                   $('#oldpassword_status').css('color','red');
+                     }, 50000);
+                }
+               }
+            });
+}
+  });
+
+  $(document).on("bind change paste keyup keypress","#confirmpassword,#newpassword",function() {
+    var newpassword=$('#newpassword').val().trim();
+    var confirmpassword=$('#confirmpassword').val().trim();
+    if (newpassword!='' && confirmpassword!='') {
+    if (newpassword == confirmpassword ) {
+      $('#confirmpassword_status').text('Password matched');
+      $('#confirmpassword_status').css('color','green');
+      setTimeout(function(){
+        $('#confirmpassword_status').text('');
+      }, 3000);
+    }else{
+      $('#confirmpassword_status').text('Password does not matched');
+      $('#confirmpassword_status').css('color','red');
+      setTimeout(function(){
+        $('#confirmpassword_status').text('');
+      }, 10000);
+
+    }
+    }
+    
+  });
+
+  
     $(function () {
         $("#example1").DataTable({
           "responsive": true,
@@ -148,29 +206,32 @@ p {
             <section class="panel">
                 <!-- END Form Elements Title -->
                 <div class="panel-body">
-                    <form action="" method="post" class="form-horizontal form-bordered" id="changepassword" autocomplete="off" onsubmit="return false;" novalidate="novalidate">
+                    <form  method="post" class="form-horizontal " role="form" id="user_update" autocomplete="off" novalidate="novalidate" action="{{ route('updatePassword') }}">
+                         @csrf
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="oldpassword">Enter current password *</label>
                             <div class="col-md-8">
-                                <input type="password" id="oldpassword" name="oldpassword" class="form-control" placeholder="Enter current password">
-                                <span class="" id="oldpassword_status"></span>
+                                <input type="password" id="oldpassword" name="oldpassword" class="form-control" placeholder="Enter current password" required="">
+                                <span class="help-block" id="oldpassword_status"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="newpassword">Enter new password *</label>
                             <div class="col-md-8">
-                                <input type="password" id="newpassword" name="newpassword" class="form-control" placeholder="Enter new password">
+                                <input type="password" id="newpassword" name="newpassword" class="form-control" placeholder="Enter new password" required="">
+                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="confirmpassword">Retype new password *</label>
                             <div class="col-md-8">
-                                <input type="password" id="confirmpassword" name="confirmpassword" class="form-control" placeholder="Retype new password">
+                                <input type="password" id="confirmpassword" name="confirmpassword" class="form-control" placeholder="Retype new password" required="">
+                                   <span  class="help-block" id="confirmpassword_status"></span>
                             </div>
                         </div>
                         <div class="form-group form-actions">
-                            <div class="col-md-9 col-md-offset-4">
-                                <button name="Send" type="submit" class="btn btn-md btn-primary" id="update_password"><i class="fa fa-angle-right"></i><span> Update</span></button>
+                            <div class="col-md-9 col-md-offset-4" style="margin-left: 235px;">
+                                <button name="Send" class="btn btn-md btn-primary" type="submit" id="update"><i class="fa fa-angle-right"></i><span> Update</span></button>
                                 <button type="reset" class="btn btn-md btn-warning"><i class="fa fa-repeat"></i> Reset</button>
                             </div>
                         </div>

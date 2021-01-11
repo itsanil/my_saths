@@ -155,30 +155,18 @@ p {
                             </tr>
                         </thead>
                         <tbody>
-                                                                <tr>
-                                        <td>18-Dec-2017 10:45:50 </td>
-                                        <td>Address Proof </td>
-                                        <td>Bank Statement </td>
-                                        <td class="text-center"><p><span class="label label-success">Verified</span>                                        </p></td>
-        <!--                                        <td>
-                                                                                </td>-->
-                                    </tr>
-                                                                        <tr>
-                                        <td>14-Oct-2016 05:32:12 </td>
-                                        <td>ID Proof </td>
-                                        <td>National ID </td>
-                                        <td class="text-center"><p><span class="label label-success">Verified</span>                                        </p></td>
-        <!--                                        <td>
-                                                                                </td>-->
-                                    </tr>
-                                                                        <tr>
-                                        <td>14-Oct-2016 05:30:00 </td>
-                                        <td>TAX ID Proof </td>
-                                        <td>Tax Document </td>
-                                        <td class="text-center"><p><span class="label label-success">Verified</span>                                        </p></td>
-        <!--                                        <td>
-                                                                                </td>-->
-                                    </tr>
+                          @foreach($document_data as $document)
+                          <tr>
+                        <td>{{date('d-M-Y H:i:s',strtotime($document->created_at))}} </td>
+                        <td>{{$document->proof}} </td>
+                        <td>{{$document->document_type}} </td>
+                        <td class="text-center"><p><span class="label label-success">{{$document->status==1?"Verified":'Pending'}}</span>                                        </p></td>
+                        <!--                                        <td>
+                        </td>-->
+                         </tr>
+                        @endforeach
+                       
+                                               
                                                             </tbody>
                     </table>
                 </div>

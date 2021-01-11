@@ -59,9 +59,10 @@
             <?php
             if(!empty(Auth::user())){ ?>
             @if(Auth::user()->hasRole('admin'))
-             <li class="nav-item has-treeview {{ (request()->is('account-setting*')) ? 'menu-open' : '' }} {{ (request()->is('edit-profile*')) ? 'menu-open' : '' }}  {{ (request()->is('view-profile*')) ? 'menu-open' : '' }} {{ (request()->is('change-password*')) ? 'menu-open' : '' }}  {{ (request()->is('change-mobile-or-email*')) ? 'menu-open' : '' }} {{ (request()->is('change-security-password*')) ? 'menu-open' : '' }} {{ (request()->is('payout-settings*')) ? 'menu-open' : '' }} {{ (request()->is('show-verification*')) ? 'menu-open' : '' }}">
+             <li class="nav-item has-treeview {{ (request()->is('account-setting*')) ? 'menu-open' : '' }} {{ (request()->is('edit-profile*')) ? 'menu-open' : '' }}  {{ (request()->is('view-profile*')) ? 'menu-open' : '' }} {{ (request()->is('change-password*')) ? 'menu-open' : '' }}  {{ (request()->is('change-mobile-or-email*')) ? 'menu-open' : '' }} {{ (request()->is('change-security-password*')) ? 'menu-open' : '' }} {{ (request()->is('payout-settings*')) ? 'menu-open' : '' }} {{ (request()->is('show-verification*')) ? 'menu-open' : '' }} {{ (request()->is('updateprofileimage*')) ? 'menu-open' : '' }}">
               
-                <a href="#" class="nav-link {{ (request()->is('account-setting*')) ? 'active' : '' }} {{ (request()->is('edit-profile*')) ? 'active' : '' }} {{ (request()->is('view-profile*')) ? 'active' : '' }} {{ (request()->is('change-password*')) ? 'active' : '' }}  {{ (request()->is('change-mobile-or-email*')) ? 'active' : '' }} {{ (request()->is('change-security-password*')) ? 'active' : '' }} {{ (request()->is('payout-settings*')) ? 'active' : '' }} {{ (request()->is('show-verification*')) ? 'active' : '' }}">
+              
+                <a href="#" class="nav-link {{ (request()->is('account-setting*')) ? 'active' : '' }} {{ (request()->is('edit-profile*')) ? 'active' : '' }} {{ (request()->is('view-profile*')) ? 'active' : '' }} {{ (request()->is('change-password*')) ? 'active' : '' }}  {{ (request()->is('change-mobile-or-email*')) ? 'active' : '' }} {{ (request()->is('change-security-password*')) ? 'active' : '' }} {{ (request()->is('payout-settings*')) ? 'active' : '' }} {{ (request()->is('show-verification*')) ? 'active' : '' }} {{ (request()->is('updateprofileimage')) ? 'active' : '' }}">
                   
                   
                   <i class="nav-icon fas fa-cogs"></i>
@@ -84,7 +85,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="{{ url('/change-password') }}" class="nav-link {{ (request()->is('change-password*')) ? 'active' : '' }}">
+                    <a href="{{ url('/change-password') }}" class="nav-link {{ (request()->is('change-password*')) ? 'active' : '' }} {{ (request()->is('updateprofileimage*')) ? 'active' : '' }}">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Change Password</p>
                     </a>

@@ -4,8 +4,11 @@
 @section('css')
 
 <!-- DataTables -->
-<!-- <link rel="stylesheet" href="{{ asset('public/adminlte/css/bootstrap.min.css') }}"> -->
-<link rel="stylesheet" href="{{ asset('public/adminlte/css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('public/adminlte/plugins/summernote/summernote-bs4.css') }}">
+ <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('public/adminlte/plugins/select2/css/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('public/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+<!-- DataTables -->
   <link rel="stylesheet" href="{{ asset('public/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('public/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <style>
@@ -81,11 +84,48 @@ p {
 @endsection
 @section('js')
 <!-- DataTables -->
+
+<script src="{{ asset('public/adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
+<!-- DataTables -->
 <script src="{{ asset('public/adminlte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('public/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('public/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('public/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('public/adminlte/plugins/summernote/summernote-bs4.min.js') }}"></script>
 <script>
+    
+    $(document).on("click bind change paste keyup keypress","#check_email_address,#checkemail_button",function() {
+    var check_email_address=$('#check_email_address').val().trim();
+     $('#submit_request_button').css('display','none');
+     $('#update_email').attr("disabled");
+    console.log('change ',check_email_address);
+    if (check_email_address !='') {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var result=regex.test(check_email_address);
+        if (result==true) {
+             $('#check_email_address_status').css('color','green');
+              $('#check_email_address_status').text('Thise Number is available');
+                   setTimeout(function(){ 
+                   $('#check_email_address_status').text('');
+                     }, 5000);
+             $('#submit_request_button').css('display','block');     
+             $('#update_email').removeAttr("disabled");
+        }else{
+              $('#check_email_address_status').text('Thise Number is Not available');
+              $('#check_email_address_status').css('color','red');
+               setTimeout(function(){ 
+               $('#check_email_address_status').text('');
+               
+                 }, 5000);
+               $('#submit_request_button').css('display','none');
+               $('#update_email').attr("disabled");
+        }
+
+
+    }
+    });
+
+
     $(function () {
         $("#example1").DataTable({
           "responsive": true,
@@ -147,36 +187,40 @@ p {
     <div class="row">
         <div class="col-sm-12">
             <section class="panel">
+                        <div class="col-5 col-sm-3">
+                <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+                  <a class="nav-link active" id="vert-tabs-home-tab" data-toggle="pill" href="#change-email" role="tab" aria-controls="vert-tabs-home" aria-selected="false">Change Email ID</a>
+                  <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill" href="#change-mobile" role="tab" aria-controls="vert-tabs-profile" aria-selected="false">Change Mobile No.</a>
+                </div>
+              </div>
                 <div class="panel-body" style="background-color:#d0d0d0;">
                     <div class="col-sm-12">
-                                                <div class="col-sm-2" style="padding:0;">
-                            <ul class="nav nav-tabs no-border tabs-left" style="border:none;">
-                                <li class="active"><a href="#change-email" data-toggle="tab">Change Email ID</a></li>
-                                <li><a href="#change-mobile" data-toggle="tab">Change Mobile No.</a></li>
-                            </ul>
-                        </div>
+                       
                         <div class="col-sm-10" style="background-color:#fff;min-height:320px;padding-top:15px;padding-bottom: 15px;">
+
                             <div class="tab-content">
-                                <div id="change-email" class="tab-pane fade in active">
-                                    <form action="https://onlinesensor.com/user/update_email" method="post" class="form-horizontal form-bordered" id="change-email-form" autocomplete="off" onsubmit="return false;" novalidate="novalidate">
+
+                                <div id="change-email" class="tab-pane fade in active show">
+                            <form action="{{ route('updateMobileEmail') }}" method="post" class="form-horizontal form-bordered" id="changetransactionpassword" autocomplete="off"  novalidate="novalidate">
+                            @csrf
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label" for="oldpassword">Current Email ID</label>
                                             <div class="col-sm-5">
-                                                <input type="email" class="form-control" value="kiranyadav831983@gmail.com" disabled="disabled">
+                                                <input type="email" class="form-control" value="{{$data->email}}" disabled="disabled">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label" for="newpassword">Change Email ID*</label>
                                             <div class="col-sm-5">
                                                 <div class="input-group">
-                                                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter new Email ID">
-                                                    <span class="input-group-btn"><button type="button" name="checkemail" class="btn btn-sm btn-info" id="checkemail" data-url="https://onlinesensor.com/user/user_email_check1"> Check Email ID</button></span>
+                                                    <input type="email" id="check_email_address" name="email" class="form-control" placeholder="Enter new Email ID">
+                                                    <span class="input-group-btn"><button type="button" name="checkemail" class="btn btn-sm btn-info" id="checkemail_button" > Check Email ID</button></span>
                                                 </div>
-                                                <div id="email_avail_status"></div>
+                                                <div id="check_email_address_status"></div>
                                             </div>
                                         </div>
-                                        <div class="form-group form-actions" style="display: none;">
-                                            <div class="col-sm-12 col-sm-offset-4">
+                                        <div class="form-group form-actions"  id='submit_request_button' style="display: none;">
+                                            <div class="col-sm-12 col-sm-offset-4"  style="margin-left: 339px;">
                                                 <button name="Send" type="submit" class="btn btn-sm btn-primary" id="update_email" disabled="disabled"><i class="fa fa-angle-right"></i> Submit Request</button>
                                             </div>
                                         </div>
@@ -187,7 +231,7 @@ p {
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label">Current Mobile No.</label>
                                             <div class="col-sm-5">
-                                                <input type="text" class="form-control" value="7410153442" disabled="disabled">
+                                                <input type="text" class="form-control" value="{{$data->mobile}}" disabled="disabled">
                         <small>Please raise a ticket to change your mobile number.</small>
                                                                                             </div>
                                         </div>
@@ -225,11 +269,13 @@ p {
                             </div>
                         </div>
                     </div>
+
                 </div>
             </section>
         </div>
     </div>
 
  </div>
+
 
 @endsection
