@@ -222,6 +222,11 @@ Route::group(['middleware' => 'role:user|admin'], function() {
     Route::get('/home',function(){
         return redirect('/dashboard');
     });
+
+    Route::post('campaign-comment', [
+          'as' => 'campaign-comment',
+          'uses' => 'CampaignController@comment'
+        ]);
     
 });
 

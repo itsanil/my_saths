@@ -96,7 +96,29 @@
               <div class="row">
                 <div class="col-12">
                   <h4>Recent Comments</h4>
+                  <?php 
+                  // echo "<pre>"; print_r($data); echo "</pre>"; die('end of code');
+                   ?>
+                  <section id="comment_section">
+                    @foreach($data as $key => $value)
                     <div class="post">
+                      <div class="user-block">
+                        <span class="username">
+                          <a href="#">{{ $value->user->username }}</a>
+                        </span>
+                        <span class="description">{{ $value->created_at }}</span>
+                      </div>
+                      
+                      <p>
+                        {{ $value->comment }}
+                      </p>
+
+                      
+                    </div>
+                  @endforeach
+                  </section>
+                  
+                    <!-- <div class="post">
                       <div class="user-block">
                         <span class="username">
                           <a href="#">Jonathan Burke Jr.</a>
@@ -111,9 +133,9 @@
                       </p>
 
                       
-                    </div>
+                    </div> -->
 
-                    <div class="post clearfix">
+                    <!-- <div class="post clearfix">
                       <div class="user-block">
                         <span class="username">
                           <a href="#">Sarah Ross</a>
@@ -126,22 +148,22 @@
                         typographers and the like. Some people hate it and argue for
                         its demise, but others ignore.
                       </p>
-                    </div>
+                    </div> -->
                     <div class="input-group">
-                    <input type="text" name="message" placeholder="Type Comment ..." class="form-control">
+                    <input type="text" name="message" id="comment" placeholder="Type Comment ..." class="form-control">
                     <span class="input-group-append">
                         @if(isset(Auth::User()->id))
                             @if(Auth::User()->id == $campaign->added_by)
                             <!-- can not add comment -->
-                                <button type="button" class="btn btn-primary" onclick="nocomment()">Send</button>
+                                <button type="button" id="comment_btn" class="btn btn-primary" onclick="nocomment()">Send</button>
                             @else
                             <!-- add comment -->
-                                <button type="button" class="btn btn-primary" onclick="comment()">Send</button>
+                                <button type="button" id="comment_btn" class="btn btn-primary" onclick="comment()">Send</button>
                             @endif
 
                         @else
                         <!-- redirect to login -->
-                            <button type="button" class="btn btn-primary" onclick="login()">Send</button>
+                            <button type="button" id="comment_btn" class="btn btn-primary" onclick="login()">Send</button>
                         @endif
                       
                     </span>
@@ -229,12 +251,50 @@
 <!-- <script src="{{ asset('public/adminlte/plugins/chart.js/Chart.min.js') }}"></script> -->
 <script src="{{ asset('public/adminlte/dist/js/demo.js') }}"></script>
 <script>
+$('#comment_btn').attr('class','btn btn-primary disabled');
+  $('#comment').on('keyup',function(){
+    if($('#comment').val() != ''){
+        $('#comment_btn').attr('class','btn btn-primary');
+    }else{
+        $('#comment_btn').attr('class','btn btn-primary disabled');
+    }
+  });
     
     function nocomment(){
          toastr.error('you can not add comment in your campaign');
     }
 
     function comment(){
+      $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: '{{ route("campaign-comment") }}',
+      data: {
+        'comment': $('#comment').val(),
+        'campaign_id': '{{ $campaign->id }}',
+        'user_id': '{{ Auth::User()->id }}'
+      },
+      beforeSend: function() {
+        $('.loadingoverlay').css('display', 'block');
+      },
+      success: function(response) {
+        toastr.success('comment added successfully');
+        var html = '';
+        $(response.data).each(function(value) {
+          html += '<div class="post">\
+                      <div class="user-block">\
+                        <span class="username">\
+                          <a href="#">{{ $value->user->username }}</a>\
+                        </span>\
+                        <span class="description">{{ $value->created_at }}</span>\
+                      </div>\
+                      <p>{{ $value->comment }}</p></div>';
+        });
+      }
+      
+    });
         
     }
 

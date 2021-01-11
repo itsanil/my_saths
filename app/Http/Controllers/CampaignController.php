@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Campaign;
 use App\CampaignCategory;
+use App\CampaignComment;
 use App\Perk;
 use Illuminate\Http\Request;
 use Validator;
 use Auth;
+use Response;
 
 class CampaignController extends Controller
 {
@@ -24,7 +26,8 @@ class CampaignController extends Controller
 
     public function campaignview($id){
         $campaign = Campaign::findorfail($id);
-        return view('backend.campaign.show',compact('campaign'));
+        $data = CampaignComment::with('user')->orderBy('id','DESC')->get();
+        return view('backend.campaign.show',compact('campaign','data'));
         // echo "<pre>"; print_r($id); echo "</pre>"; die('end of code');
         // $data = Campaign::with('campaign')->where('category_id',$_GET['id'])->first();
         // return view('frontend.campaign_view',compact('data'));
@@ -39,6 +42,7 @@ class CampaignController extends Controller
 
     public function contributenow($id){
         $campaign = Campaign::findorfail($id);
+
         return view('frontend.contribute_now',compact('campaign'));
     }
 
@@ -216,5 +220,16 @@ class CampaignController extends Controller
     public function destroy(Campaign $campaign)
     {
         //
+    }
+
+    public function comment(Request $request){
+        $data = new CampaignComment();
+        $data->campaign_id = $request->campaign_id;
+        $data->user_id = $request->user_id;
+        $data->comment = $request->comment;
+        $data->save();
+
+        $data = CampaignComment::with('user')->get()->toArray();
+        return Response::json(array('success' => true,'data'=>$data));
     }
 }

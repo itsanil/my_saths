@@ -13,23 +13,19 @@ class CreateCampaignCommentsTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('campaign_comments')) {
-            Schema::create('campaign_comments', function (Blueprint $table) {
-                $table->increments('id');
-                    $table->integer('campaign_id')->nullable()->unsigned()->index();
-                    $table->integer('user_id')->nullable()->unsigned()->index();
+        Schema::create('campaign_comments', function (Blueprint $table) {
+            $table->increments('id');
+                    $table->integer('campaign_id');
+                    $table->bigInteger('user_id')->nullable()->unsigned()->index();
                     $table->string('comment');
                     $table->timestamps();
 
-                    $table->foreign('campaign_id')
-                    ->references('id')->on('campaign')
-                    ->onDelete('cascade');
+                    
 
                     $table->foreign('user_id')
-                    ->references('id')->on('user')
+                    ->references('id')->on('users')
                     ->onDelete('cascade');
             });
-        }
     }
 
     /**
